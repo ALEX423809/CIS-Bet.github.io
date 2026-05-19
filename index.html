@@ -1,0 +1,2970 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS-MelBet — Партнёрская платформа</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Inline CSS replacing Tailwind CDN -->
+    <style>
+        /* CSS Reset & Base */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #0A0A0A; color: #fff; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; pointer-events: auto; }
+
+        /* iOS rendering fix for fixed elements */
+        .fixed { -webkit-transform: translateZ(0); transform: translateZ(0); }
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; border: none; background: none; font-family: inherit; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+        img, svg { display: block; max-width: 100%; }
+
+        /* Layout Utilities */
+        .fixed { position: fixed; }
+        .absolute { position: absolute; }
+        .relative { position: relative; }
+        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+        .top-0 { top: 0; }
+        .top-10 { top: 2.5rem; }
+        .top-20 { top: 5rem; }
+        .top-24 { top: 6rem; }
+        .right-0 { right: 0; }
+        .right-2 { right: 0.5rem; }
+        .right-4 { right: 1rem; }
+        .right-10 { right: 2.5rem; }
+        .bottom-10 { bottom: 2.5rem; }
+        .bottom-20 { bottom: 5rem; }
+        .left-0 { left: 0; }
+        .left-10 { left: 2.5rem; }
+        .left-1\/4 { left: 25%; }
+        .z-10 { z-index: 10; }
+        .z-40 { z-index: 40; }
+        .z-50 { z-index: 50; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-12 { margin-bottom: 3rem; }
+        .mb-16 { margin-bottom: 4rem; }
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-5 { margin-top: 1.25rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-8 { margin-top: 2rem; }
+        .mt-16 { margin-top: 4rem; }
+        .ml-2 { margin-left: 0.5rem; }
+        .ml-4 { margin-left: 1rem; }
+        .mr-2 { margin-right: 0.5rem; }
+        .flex { display: flex; }
+        .inline-flex { display: inline-flex; }
+        .hidden { display: none; }
+        .block { display: block; }
+        .grid { display: grid; }
+        .h-2 { height: 0.5rem; }
+        .h-8 { height: 2rem; }
+        .h-10 { height: 2.5rem; }
+        .h-14 { height: 3.5rem; }
+        .h-16 { height: 4rem; }
+        .h-0\.5 { height: 0.125rem; }
+        .min-h-screen { min-height: 100vh; }
+        .w-2 { width: 0.5rem; }
+        .w-4 { width: 1rem; }
+        .w-5 { width: 1.25rem; }
+        .w-6 { width: 1.5rem; }
+        .w-8 { width: 2rem; }
+        .w-10 { width: 2.5rem; }
+        .w-12 { width: 3rem; }
+        .w-14 { width: 3.5rem; }
+        .w-16 { width: 4rem; }
+        .w-32 { width: 8rem; }
+        .w-64 { width: 16rem; }
+        .w-72 { width: 18rem; }
+        .w-96 { width: 24rem; }
+        .w-full { width: 100%; }
+        .max-w-3xl { max-width: 48rem; }
+        .max-w-4xl { max-width: 56rem; }
+        .max-w-7xl { max-width: 80rem; }
+        .max-w-xl { max-width: 36rem; }
+        .max-w-2xl { max-width: 42rem; }
+        .max-w-3xl { max-width: 48rem; }
+        .max-w-\[100vw\] { max-width: 100vw; }
+        .flex-shrink-0 { flex-shrink: 0; }
+        .flex-col { flex-direction: column; }
+        .flex-1 { flex: 1 1 0%; }
+        .flex-row { flex-direction: row; }
+        .flex-wrap { flex-wrap: wrap; }
+        .items-start { align-items: flex-start; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-1 { gap: 0.25rem; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-3 { gap: 0.75rem; }
+        .gap-4 { gap: 1rem; }
+        .gap-6 { gap: 1.5rem; }
+        .gap-8 { gap: 2rem; }
+        .gap-12 { gap: 3rem; }
+        .gap-1\.5 { gap: 0.375rem; }
+        .space-y-3 > * + * { margin-top: 0.75rem; }
+
+        /* Grid */
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+        /* Padding */
+        .p-1\.5 { padding: 0.375rem; }
+        .p-4 { padding: 1rem; }
+        .p-6 { padding: 1.5rem; }
+        .p-8 { padding: 2rem; }
+        .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+        .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        .px-8 { padding-left: 2rem; padding-right: 2rem; }
+        .px-10 { padding-left: 2.5rem; padding-right: 2.5rem; }
+        .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+        .py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+        .py-24 { padding-top: 6rem; padding-bottom: 6rem; }
+        .pt-8 { padding-top: 2rem; }
+        .pt-16 { padding-top: 4rem; }
+        .pt-32 { padding-top: 8rem; }
+        .pb-8 { padding-bottom: 2rem; }
+        .pb-20 { padding-bottom: 5rem; }
+
+        /* Typography */
+        .text-xs { font-size: 0.75rem; line-height: 1rem; }
+        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .text-base { font-size: 1rem; line-height: 1.5rem; }
+        .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+        .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+        .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+        .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+        .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+        .text-5xl { font-size: 3rem; line-height: 1; }
+        .text-6xl { font-size: 3.75rem; line-height: 1; }
+        .text-7xl { font-size: 4.5rem; line-height: 1; }
+        .text-8xl { font-size: 6rem; line-height: 1; }
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .font-black { font-weight: 900; }
+        .uppercase { text-transform: uppercase; }
+        .leading-tight { line-height: 1.25; }
+        .leading-relaxed { line-height: 1.625; }
+        .tracking-tight { letter-spacing: -0.025em; }
+        .tracking-wider { letter-spacing: 0.05em; }
+        .text-center { text-align: center; }
+        .text-white { color: #fff; }
+        .text-black { color: #000; }
+        .text-gray-300 { color: #d1d5db; }
+        .text-gray-400 { color: #9ca3af; }
+        .text-gray-500 { color: #6b7280; }
+        .text-gray-600 { color: #4b5563; }
+        .break-words { overflow-wrap: break-word; }
+
+        /* Backgrounds */
+        .bg-black { background-color: #000; }
+        .bg-brand-yellow { background-color: #FFD700; }
+        .bg-brand-dark { background-color: #0A0A0A; }
+        .bg-brand-card { background-color: #141414; }
+        .bg-brand-yellow\/5 { background-color: rgba(255, 215, 0, 0.05); }
+        .bg-brand-yellow\/10 { background-color: rgba(255, 215, 0, 0.1); }
+        .bg-brand-yellow\/20 { background-color: rgba(255, 215, 0, 0.2); }
+        .bg-brand-dark\/60 { background-color: rgba(10, 10, 10, 0.6); }
+        .bg-brand-dark\/90 { background-color: rgba(10, 10, 10, 0.9); }
+
+        /* Borders */
+        .border { border-width: 1px; }
+        .border-b { border-bottom-width: 1px; }
+        .border-t { border-top-width: 1px; }
+        .border-y { border-top-width: 1px; border-bottom-width: 1px; }
+        .border-brand-border { border-color: #2A2A2A; }
+        .border-brand-yellow\/20 { border-color: rgba(255, 215, 0, 0.2); }
+        .border-brand-yellow\/30 { border-color: rgba(255, 215, 0, 0.3); }
+        .rounded-lg { border-radius: 0.5rem; }
+        .rounded-xl { border-radius: 0.75rem; }
+        .rounded-2xl { border-radius: 1rem; }
+        .rounded-3xl { border-radius: 1.5rem; }
+        .rounded-full { border-radius: 9999px; }
+
+        /* Effects */
+        .backdrop-blur-md { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .blur-\[100px\] { filter: blur(100px); }
+        .blur-\[120px\] { filter: blur(120px); }
+        .blur-\[150px\] { filter: blur(150px); }
+        .blur-3xl { filter: blur(64px); }
+        .opacity-10 { opacity: 0.1; }
+        .opacity-20 { opacity: 0.2; }
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); }
+        .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); }
+        .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+
+        /* Pointer */
+        .pointer-events-none { pointer-events: none; }
+
+        /* Custom Brand Colors */
+        .text-brand-yellow { color: #FFD700; }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Glow Effects */
+        .glow-yellow { box-shadow: 0 0 20px rgba(255, 215, 0, 0.15); }
+        .glow-yellow-strong { box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); }
+        .text-glow { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+
+        /* Hero Background */
+        .hero-bg {
+            background: radial-gradient(ellipse at top, #1a1a1a 0%, #0A0A0A 70%);
+        }
+
+        /* Card Hover */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.1);
+            border-color: #FFD700;
+        }
+
+        /* Revenue Card */
+        .revenue-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .revenue-card:hover {
+            transform: translateY(-8px);
+            border-color: #FFD700;
+            box-shadow: 0 12px 40px rgba(255, 215, 0, 0.15);
+        }
+        .revenue-icon {
+            transition: all 0.3s ease;
+        }
+        .revenue-card:hover .revenue-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5));
+        }
+
+        /* Result Card */
+        .result-card {
+            transition: all 0.4s ease;
+        }
+        .result-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.2);
+        }
+
+        /* Animations */
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+        }
+        .pulse-dot {
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes moneyFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .money-float {
+            animation: moneyFloat 3s ease-in-out infinite;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Revenue Badge */
+        .revenue-badge {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.1));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        /* Plus Sign */
+        .plus-sign {
+            transition: all 0.3s ease;
+        }
+
+        /* Language Buttons */
+        .lang-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            -webkit-tap-highlight-color: rgba(255, 215, 0, 0.3);
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .lang-btn:hover:not(.active) {
+            background-color: #2A2A2A;
+            color: #FFD700;
+        }
+        .lang-btn.active {
+            background-color: #FFD700;
+            color: #000;
+            font-weight: 700;
+        }
+
+        /* List styling */
+        ul { list-style: none; }
+
+        
+        /* Messenger Widgets */
+        .messenger-btn {
+            -webkit-tap-highlight-color: rgba(255,255,255,0.2);
+            touch-action: manipulation;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .messenger-btn:active {
+            transform: scale(0.95);
+        }
+        @media (min-width: 640px) {
+            #messenger-widgets {
+                bottom: 2rem;
+                right: 2rem;
+            }
+            .messenger-btn {
+                width: 3.5rem;
+                height: 3.5rem;
+            }
+            .messenger-btn svg {
+                width: 1.75rem;
+                height: 1.75rem;
+            }
+        }
+
+                                        /* MelBet Orbital Logo */
+        .melbet-orbit-wrapper {
+            display: none;
+        }
+        /* Mobile MelBet Orbit */
+        .melbet-orbit-mobile {
+            display: block;
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 0.5rem auto 0.5rem;
+            z-index: 20;
+        }
+
+        .melbet-orbit-mobile .melbet-orbit-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .melbet-orbit-mobile .melbet-logo {
+            font-size: 2rem;
+        }
+
+        .melbet-orbit-mobile .melbet-subtitle {
+            font-size: 0.6rem;
+        }
+
+        .melbet-orbit-mobile .sport-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .melbet-orbit-mobile .sport-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .melbet-orbit-mobile .sport-icon-small {
+            width: 24px;
+            height: 24px;
+        }
+
+        .melbet-orbit-mobile .sport-icon-small img {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Adjust orbit radius for mobile */
+        .melbet-orbit-mobile .football-item {
+            animation: football-orbit-mobile 10s linear infinite;
+        }
+        @keyframes football-orbit-mobile {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(80px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(80px) rotate(-360deg); }
+        }
+
+        .melbet-orbit-mobile .basketball-item {
+            animation: basketball-orbit-mobile 12s ease-in-out infinite;
+        }
+        @keyframes basketball-orbit-mobile {
+            0%, 100% { transform: translate(-50%, -50%) translate(0, -60px); }
+            33% { transform: translate(-50%, -50%) translate(55px, 30px); }
+            66% { transform: translate(-50%, -50%) translate(-55px, 30px); }
+        }
+
+        .melbet-orbit-mobile .tennis-item {
+            animation: tennis-figure8-mobile 16s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+        }
+        @keyframes tennis-figure8-mobile {
+            0% { transform: translate(-50%, -50%) translate(0, 0); }
+            25% { transform: translate(-50%, -50%) translate(35px, -45px); }
+            50% { transform: translate(-50%, -50%) translate(0, 0); }
+            75% { transform: translate(-50%, -50%) translate(-35px, 45px); }
+            100% { transform: translate(-50%, -50%) translate(0, 0); }
+        }
+
+        /* Hide mobile orbit on desktop */
+        @media (min-width: 1024px) {
+            .melbet-orbit-mobile {
+                display: none;
+            }
+        }
+
+        /* Desktop orbit */
+        @media (min-width: 1024px) {
+            .melbet-orbit-wrapper {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: -120px;
+                width: 520px;
+                height: 520px;
+                z-index: 20;
+            }
+        }
+        @media (min-width: 1280px) {
+            .melbet-orbit-wrapper {
+                top: 10px;
+                right: -100px;
+                width: 600px;
+                height: 600px;
+            }
+        }
+
+        .melbet-orbit-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .melbet-glow {
+            position: absolute;
+            inset: 15px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,215,0,0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .orbit-item {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+        }
+
+        .sport-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transform: translate(-50%, -50%);
+            overflow: hidden;
+            background: transparent;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .sport-icon:hover {
+            transform: translate(-50%, -50%) scale(1.15);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.4), 0 0 20px rgba(255, 215, 0, 0.1);
+        }
+        .sport-icon img {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .sport-icon-small {
+            width: 36px;
+            height: 36px;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .sport-icon-small img {
+            width: 26px;
+            height: 26px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+        }
+
+        /* Individual orbit animations */
+        .football-item {
+            animation: football-orbit 10s linear infinite;
+        }
+        @keyframes football-orbit {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(147px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(147px) rotate(-360deg); }
+        }
+
+        .basketball-item {
+            animation: basketball-orbit 12s ease-in-out infinite;
+        }
+        @keyframes basketball-orbit {
+            0%, 100% { transform: translate(-50%, -50%) translate(0, -133px); }
+            33% { transform: translate(-50%, -50%) translate(116px, 67px); }
+            66% { transform: translate(-50%, -50%) translate(-116px, 67px); }
+        }
+
+        .tennis-item {
+            animation: tennis-figure8 16s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+        }
+
+        .tennis-on-top {
+            z-index: 30;
+        }
+        @keyframes tennis-figure8 {
+            0% { transform: translate(-50%, -50%) translate(0, 0); }
+            25% { transform: translate(-50%, -50%) translate(50px, -80px); }
+            50% { transform: translate(-50%, -50%) translate(0, 0); }
+            75% { transform: translate(-50%, -50%) translate(-50px, 80px); }
+            100% { transform: translate(-50%, -50%) translate(0, 0); }
+        }
+
+        .dota-item {
+            animation: dota-orbit 14s linear infinite;
+        }
+        @keyframes dota-orbit {
+            0% { transform: translate(-50%, -50%) translate(0, 0); }
+            12.5% { transform: translate(-50%, -50%) translate(55px, -55px); }
+            25% { transform: translate(-50%, -50%) translate(85px, 0); }
+            37.5% { transform: translate(-50%, -50%) translate(55px, 55px); }
+            50% { transform: translate(-50%, -50%) translate(0, 0); }
+            62.5% { transform: translate(-50%, -50%) translate(-55px, -55px); }
+            75% { transform: translate(-50%, -50%) translate(-85px, 0); }
+            87.5% { transform: translate(-50%, -50%) translate(-55px, 55px); }
+            100% { transform: translate(-50%, -50%) translate(0, 0); }
+        }
+
+        .cs2-item {
+            animation: cs2-orbit 11s ease-in-out infinite;
+        }
+        @keyframes cs2-orbit {
+            0%, 100% { transform: translate(-50%, -50%) translate(0, -90px); }
+            25% { transform: translate(-50%, -50%) translate(90px, 0); }
+            50% { transform: translate(-50%, -50%) translate(0, 90px); }
+            75% { transform: translate(-50%, -50%) translate(-90px, 0); }
+        }
+
+        .hockey-item {
+            animation: hockey-orbit 13s linear infinite reverse;
+        }
+        @keyframes hockey-orbit {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(100px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+
+        .melbet-center {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .wave-letter {
+            display: inline-block;
+            animation: waveMotion 5s ease-in-out infinite;
+        }
+
+        .melbet-subtitle {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #9ca3af;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            animation: gentleFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes waveMotion {
+            0%, 100% { 
+                transform: translateY(0px);
+            }
+            50% { 
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { 
+                transform: translateY(0px);
+            }
+            50% { 
+                transform: translateY(-6px);
+            }
+        }
+        .melbet-logo {
+            font-size: 4.5rem;
+            font-weight: 900;
+            letter-spacing: -0.025em;
+            line-height: 1;
+        }
+        @media (min-width: 1280px) {
+            .melbet-logo {
+                font-size: 5.5rem;
+            }
+        }
+        .melbet-subtitle {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #9ca3af;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+
+/* Responsive - sm (640px) */
+        @media (min-width: 640px) {
+            .sm\:inline { display: inline; }
+            .sm\:flex { display: flex; }
+            .sm\:hidden { display: none; }
+            .sm\:flex-row { flex-direction: row; }
+            .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .sm\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .sm\:right-4 { right: 1rem; }
+            .sm\:left-auto { left: auto; }
+            .sm\:w-8 { width: 2rem; }
+            .sm\:h-8 { height: 2rem; }
+            .sm\:gap-4 { gap: 1rem; }
+            .sm\:gap-12 { gap: 3rem; }
+            .sm\:gap-3 { gap: 0.75rem; }
+            .sm\:p-8 { padding: 2rem; }
+            .sm\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+            .sm\:px-10 { padding-left: 2.5rem; padding-right: 2.5rem; }
+            .sm\:py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+            .sm\:text-left { text-align: left; }
+            .sm\:text-base { font-size: 1rem; line-height: 1.5rem; }
+            .sm\:text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+            .sm\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+            .sm\:text-2xl { font-size: 1.5rem; line-height: 2rem; }
+            .sm\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+            .sm\:text-5xl { font-size: 3rem; line-height: 1; }
+            .sm\:text-6xl { font-size: 3.75rem; line-height: 1; }
+            .sm\:w-16 { width: 4rem; }
+            .sm\:h-16 { height: 4rem; }
+            .sm\:w-sm { width: 24rem; }
+            .sm\:rounded-3xl { border-radius: 1.5rem; }
+            .sm\:flex-col { flex-direction: column; }
+            .sm\:text-7xl { font-size: 4.5rem; line-height: 1; }
+            .sm\:w-12 { width: 3rem; }
+            .sm\:h-10 { height: 2.5rem; }
+            .sm\:flex-initial { flex: 0 1 auto; }
+        }
+
+        /* Responsive - md (768px) */
+        @media (min-width: 768px) {
+            .md\:block { display: block; }
+            .md\:flex { display: flex; }
+            .md\:hidden { display: none; }
+            .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .md\:flex-row { flex-direction: row; }
+            .md\:col-span-1 { grid-column: span 1 / span 1; }
+            .md\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+            .md\:text-6xl { font-size: 3.75rem; line-height: 1; }
+        }
+
+        /* Responsive - lg (1024px) */
+        @media (min-width: 1024px) {
+            .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .lg\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+            .lg\:p-10 { padding: 2.5rem; }
+            .lg\:p-12 { padding: 3rem; }
+            .lg\:text-7xl { font-size: 4.5rem; line-height: 1; }
+            .lg\:text-6xl { font-size: 3.75rem; line-height: 1; }
+            .lg\:text-8xl { font-size: 6rem; line-height: 1; }
+            .lg\:text-5xl { font-size: 3rem; line-height: 1; }
+            .lg\:gap-8 { gap: 2rem; }
+            .lg\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+        }
+
+
+        /* Additional missing utilities */
+        .overflow-hidden { overflow: hidden; }
+        .antialiased { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        .transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+        .transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+
+        /* Opacity backgrounds - escaped for CSS */
+        .bg-brand-dark\/60 { background-color: rgba(10, 10, 10, 0.6); }
+        .bg-brand-dark\/90 { background-color: rgba(10, 10, 10, 0.9); }
+        .bg-brand-yellow\/5 { background-color: rgba(255, 215, 0, 0.05); }
+        .bg-brand-yellow\/10 { background-color: rgba(255, 215, 0, 0.1); }
+        .bg-brand-yellow\/20 { background-color: rgba(255, 215, 0, 0.2); }
+
+        /* Gradient */
+        .bg-gradient-to-br { background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)); }
+        .from-brand-yellow\/20 { --tw-gradient-from: rgba(255, 215, 0, 0.2); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(255, 215, 0, 0)); }
+        .via-brand-yellow\/10 { --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 215, 0, 0.1), var(--tw-gradient-to, rgba(255, 215, 0, 0)); }
+        .to-transparent { --tw-gradient-to: transparent; }
+        .bg-yellow-600 { background-color: #ca8a04; }
+
+        /* Border opacity */
+        .border-brand-yellow\/20 { border-color: rgba(255, 215, 0, 0.2); }
+        .border-brand-yellow\/30 { border-color: rgba(255, 215, 0, 0.3); }
+
+        /* Shadow opacity */
+        .shadow-brand-yellow\/20 { --tw-shadow-color: rgba(255, 215, 0, 0.2); --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color); box-shadow: var(--tw-shadow); }
+        .shadow-brand-yellow\/30 { --tw-shadow-color: rgba(255, 215, 0, 0.3); --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color); box-shadow: var(--tw-shadow); }
+
+        /* Hover states - properly escaped */
+        .hover\:bg-yellow-300:hover { background-color: #fde047; }
+        .hover\:border-brand-yellow:hover { border-color: #FFD700; }
+        .hover\:text-brand-yellow:hover { color: #FFD700; }
+        .hover\:text-gray-400:hover { color: #9ca3af; }
+
+        /* Position utilities */
+        .left-1\/2 { left: 50%; }
+        .left-1\/4 { left: 25%; }
+        .right-1\/4 { right: 25%; }
+        .-translate-x-1\/2 { transform: translateX(-50%); }
+
+        /* Size utilities */
+        .h-4 { height: 1rem; }
+        .h-5 { height: 1.25rem; }
+        .h-6 { height: 1.5rem; }
+        .h-7 { height: 1.75rem; }
+        .h-12 { height: 3rem; }
+        .h-32 { height: 8rem; }
+        .h-64 { height: 16rem; }
+        .h-72 { height: 18rem; }
+        .h-96 { height: 24rem; }
+        .w-7 { width: 1.75rem; }
+
+        /* Blur utilities with bracket notation */
+        .blur-\[100px\] { filter: blur(100px); }
+        .blur-\[120px\] { filter: blur(120px); }
+        .blur-\[150px\] { filter: blur(150px); }
+
+        /* Gap */
+        .gap-5 { gap: 1.25rem; }
+
+        /* Padding with dot notation */
+        .p-\[1\.5\] { padding: 0.375rem; }
+        .p-1\.5 { padding: 0.375rem; }
+        .py-\[1\.5\] { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+        .py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+
+        /* Space */
+        .space-y-3 > * + * { margin-top: 0.75rem; }
+
+        /* Responsive missing */
+        @media (min-width: 640px) {
+            .sm\:inline { display: inline; }
+            .sm\:px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+        }
+
+        @media (min-width: 768px) {
+            .md\:col-span-1 { grid-column: span 1 / span 1; }
+            .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .md\:text-6xl { font-size: 3.75rem; line-height: 1; }
+        }
+
+        @media (min-width: 1024px) {
+            .lg\:p-10 { padding: 2.5rem; }
+            .lg\:p-12 { padding: 3rem; }
+            .lg\:text-7xl { font-size: 4.5rem; line-height: 1; }
+        }
+
+                /* iOS Safari specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .ios-safe-area {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+    
+        /* Missing classes - direct definitions */
+        [class*="blur-[100px]"] { filter: blur(100px); }
+        [class*="blur-[120px]"] { filter: blur(120px); }
+        [class*="blur-[150px]"] { filter: blur(150px); }
+
+        [class*="hover:bg-yellow-300"]:hover { background-color: #fde047; }
+        [class*="hover:border-brand-yellow"]:hover { border-color: #FFD700; }
+        [class*="hover:text-brand-yellow"]:hover { color: #FFD700; }
+        [class*="hover:text-gray-400"]:hover { color: #9ca3af; }
+
+        .active { font-weight: 700; }
+
+        @media (min-width: 640px) {
+            [class*="sm:inline"] { display: inline; }
+            [class*="sm:px-5"] { padding-left: 1.25rem; padding-right: 1.25rem; }
+        }
+
+        @media (min-width: 768px) {
+            [class*="md:col-span-1"] { grid-column: span 1 / span 1; }
+            [class*="md:grid-cols-4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            [class*="md:text-6xl"] { font-size: 3.75rem; line-height: 1; }
+        }
+
+        @media (min-width: 1024px) {
+            [class*="lg:p-10"] { padding: 2.5rem; }
+            [class*="lg:p-12"] { padding: 3rem; }
+            [class*="lg:text-7xl"] { font-size: 4.5rem; line-height: 1; }
+        }
+
+        /* Final missing classes with bracket/slash notation */
+        [class*="blur-\[100px\]"] { filter: blur(100px); }
+        [class*="blur-\[120px\]"] { filter: blur(120px); }
+        [class*="blur-\[150px\]"] { filter: blur(150px); }
+
+        [class*="-translate-x-1\/2"] { transform: translateX(-50%); }
+        [class*="left-1\/2"] { left: 50%; }
+        [class*="left-1\/4"] { left: 25%; }
+        [class*="right-1\/4"] { right: 25%; }
+
+        [class*="bg-brand-dark\/60"] { background-color: rgba(10, 10, 10, 0.6); }
+        [class*="bg-brand-dark\/90"] { background-color: rgba(10, 10, 10, 0.9); }
+        [class*="bg-brand-yellow\/5"] { background-color: rgba(255, 215, 0, 0.05); }
+        [class*="bg-brand-yellow\/10"] { background-color: rgba(255, 215, 0, 0.1); }
+        [class*="bg-brand-yellow\/20"] { background-color: rgba(255, 215, 0, 0.2); }
+
+        [class*="border-brand-yellow\/20"] { border-color: rgba(255, 215, 0, 0.2); }
+        [class*="border-brand-yellow\/30"] { border-color: rgba(255, 215, 0, 0.3); }
+
+        [class*="from-brand-yellow\/20"] { --tw-gradient-from: rgba(255, 215, 0, 0.2); }
+        [class*="via-brand-yellow\/10"] { --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 215, 0, 0.1), var(--tw-gradient-to, rgba(255, 215, 0, 0)); }
+
+        [class*="hover\:bg-yellow-300"]:hover { background-color: #fde047; }
+        [class*="hover\:border-brand-yellow"]:hover { border-color: #FFD700; }
+        [class*="hover\:text-brand-yellow"]:hover { color: #FFD700; }
+        [class*="hover\:text-gray-400"]:hover { color: #9ca3af; }
+
+        .active { font-weight: 700; }
+
+        @media (min-width: 640px) {
+            [class*="sm\:inline"] { display: inline; }
+            [class*="sm\:px-5"] { padding-left: 1.25rem; padding-right: 1.25rem; }
+        }
+
+        @media (min-width: 768px) {
+            [class*="md\:col-span-1"] { grid-column: span 1 / span 1; }
+            [class*="md\:grid-cols-4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            [class*="md\:text-6xl"] { font-size: 3.75rem; line-height: 1; }
+        }
+
+        @media (min-width: 1024px) {
+            [class*="lg\:p-10"] { padding: 2.5rem; }
+            [class*="lg\:p-12"] { padding: 3rem; }
+            [class*="lg\:text-7xl"] { font-size: 4.5rem; line-height: 1; }
+        }
+
+        /* Final missing utilities */
+        [class*="p-1.5"] { padding: 0.375rem; }
+        [class*="py-1.5"] { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+
+        @media (min-width: 640px) {
+            [class*="sm:ml-4"] { margin-left: 1rem; }
+            [class*="sm:text-4xl"] { font-size: 2.25rem; line-height: 2.5rem; }
+        }
+
+        /* ===== PURE CSS GOLDEN RAIN EFFECT - INFINITE FALLING SLOW ===== */
+        .golden-rain-bg {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .golden-rain-bg::before,
+        .golden-rain-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            mask-image: linear-gradient(to bottom, 
+                rgba(0,0,0,1) 0%, 
+                rgba(0,0,0,0.9) 30%, 
+                rgba(0,0,0,0.6) 60%,
+                rgba(0,0,0,0.2) 80%,
+                rgba(0,0,0,0) 100%
+            );
+            -webkit-mask-image: linear-gradient(to bottom, 
+                rgba(0,0,0,1) 0%, 
+                rgba(0,0,0,0.9) 30%, 
+                rgba(0,0,0,0.6) 60%,
+                rgba(0,0,0,0.2) 80%,
+                rgba(0,0,0,0) 100%
+            );
+        }
+
+        .golden-rain-bg::before {
+            background: 
+                radial-gradient(1.1px 6.0px at 82% -6%, rgba(255, 215, 0, 0.41) 50%, transparent 50%),
+                radial-gradient(2.5px 12.8px at 95% -7%, rgba(255, 215, 0, 0.31) 50%, transparent 50%),
+                radial-gradient(1.1px 5.4px at 55% -16%, rgba(255, 215, 0, 0.6) 50%, transparent 50%),
+                radial-gradient(1.4px 10.1px at 4% 51%, rgba(255, 215, 0, 0.63) 50%, transparent 50%),
+                radial-gradient(2.3px 11.9px at 29% 37%, rgba(255, 215, 0, 0.25) 50%, transparent 50%),
+                radial-gradient(1.7px 4.7px at 21% 34%, rgba(255, 215, 0, 0.92) 50%, transparent 50%),
+                radial-gradient(1.2px 4.1px at 44% -7%, rgba(255, 215, 0, 0.84) 50%, transparent 50%),
+                radial-gradient(2.8px 11.0px at 78% 13%, rgba(255, 215, 0, 0.63) 50%, transparent 50%),
+                radial-gradient(2.2px 12.1px at 49% -10%, rgba(255, 215, 0, 0.68) 50%, transparent 50%),
+                radial-gradient(1.4px 3.8px at 47% 53%, rgba(255, 215, 0, 0.71) 50%, transparent 50%),
+                radial-gradient(3.2px 12.4px at 99% 17%, rgba(255, 215, 0, 0.86) 50%, transparent 50%),
+                radial-gradient(2.0px 12.2px at 49% 15%, rgba(255, 215, 0, 0.36) 50%, transparent 50%),
+                radial-gradient(2.5px 10.7px at 46% 6%, rgba(255, 215, 0, 0.73) 50%, transparent 50%),
+                radial-gradient(2.4px 8.9px at 10% 57%, rgba(255, 215, 0, 0.42) 50%, transparent 50%),
+                radial-gradient(1.6px 13.2px at 60% 28%, rgba(255, 215, 0, 0.73) 50%, transparent 50%),
+                radial-gradient(2.9px 11.5px at 29% 21%, rgba(255, 215, 0, 0.41) 50%, transparent 50%),
+                radial-gradient(1.9px 3.7px at 5% 20%, rgba(255, 215, 0, 0.89) 50%, transparent 50%),
+                radial-gradient(1.5px 8.5px at 73% 20%, rgba(255, 215, 0, 0.87) 50%, transparent 50%),
+                radial-gradient(1.3px 4.5px at 83% 38%, rgba(255, 215, 0, 0.77) 50%, transparent 50%),
+                radial-gradient(2.6px 7.7px at 69% 13%, rgba(255, 215, 0, 0.66) 50%, transparent 50%),
+                radial-gradient(3.2px 4.5px at 47% 8%, rgba(255, 215, 0, 0.6) 50%, transparent 50%),
+                radial-gradient(2.9px 4.7px at 97% -14%, rgba(255, 215, 0, 0.36) 50%, transparent 50%),
+                radial-gradient(2.3px 7.2px at 88% 34%, rgba(255, 215, 0, 0.67) 50%, transparent 50%),
+                radial-gradient(1.6px 9.1px at 60% 47%, rgba(255, 215, 0, 0.91) 50%, transparent 50%),
+                radial-gradient(2.5px 8.9px at 88% -6%, rgba(255, 215, 0, 0.44) 50%, transparent 50%),
+                radial-gradient(1.2px 7.8px at 83% 23%, rgba(255, 215, 0, 0.57) 50%, transparent 50%),
+                radial-gradient(3.1px 11.4px at 93% 13%, rgba(255, 215, 0, 0.61) 50%, transparent 50%),
+                radial-gradient(1.7px 10.0px at 14% 60%, rgba(255, 215, 0, 0.68) 50%, transparent 50%),
+                radial-gradient(2.7px 8.9px at 20% 27%, rgba(255, 215, 0, 0.8) 50%, transparent 50%),
+                radial-gradient(2.3px 8.4px at 68% -20%, rgba(255, 215, 0, 0.33) 50%, transparent 50%),
+                radial-gradient(1.5px 5.6px at 47% 19%, rgba(255, 215, 0, 0.65) 50%, transparent 50%),
+                radial-gradient(2.6px 12.0px at 11% -10%, rgba(255, 215, 0, 0.93) 50%, transparent 50%),
+                radial-gradient(1.3px 8.2px at 69% -4%, rgba(255, 215, 0, 0.63) 50%, transparent 50%),
+                radial-gradient(2.9px 7.7px at 34% 47%, rgba(255, 215, 0, 0.4) 50%, transparent 50%),
+                radial-gradient(2.6px 7.4px at 70% 5%, rgba(255, 215, 0, 0.72) 50%, transparent 50%),
+                radial-gradient(3.0px 8.0px at 48% 36%, rgba(255, 215, 0, 0.42) 50%, transparent 50%),
+                radial-gradient(1.0px 9.1px at 9% 23%, rgba(255, 215, 0, 0.66) 50%, transparent 50%),
+                radial-gradient(2.6px 3.6px at 1% -11%, rgba(255, 215, 0, 0.3) 50%, transparent 50%),
+                radial-gradient(1.2px 5.6px at 5% 22%, rgba(255, 215, 0, 0.72) 50%, transparent 50%),
+                radial-gradient(1.3px 13.3px at 28% 49%, rgba(255, 215, 0, 0.65) 50%, transparent 50%),
+                radial-gradient(2.7px 11.9px at 61% 11%, rgba(255, 215, 0, 0.38) 50%, transparent 50%),
+                radial-gradient(1.8px 7.5px at 13% 35%, rgba(255, 215, 0, 0.85) 50%, transparent 50%),
+                radial-gradient(1.1px 11.0px at 7% -8%, rgba(255, 215, 0, 0.81) 50%, transparent 50%),
+                radial-gradient(1.4px 8.9px at 14% 11%, rgba(255, 215, 0, 0.35) 50%, transparent 50%),
+                radial-gradient(2.0px 12.6px at 24% 15%, rgba(255, 215, 0, 0.3) 50%, transparent 50%),
+                radial-gradient(1.1px 14.0px at 71% -8%, rgba(255, 215, 0, 0.84) 50%, transparent 50%),
+                radial-gradient(1.4px 8.3px at 12% 10%, rgba(255, 215, 0, 0.4) 50%, transparent 50%),
+                radial-gradient(1.4px 3.0px at 52% -13%, rgba(255, 215, 0, 0.52) 50%, transparent 50%),
+                radial-gradient(1.9px 13.5px at 59% 16%, rgba(255, 215, 0, 0.95) 50%, transparent 50%),
+                radial-gradient(1.3px 6.3px at 72% 42%, rgba(255, 215, 0, 0.93) 50%, transparent 50%),
+                radial-gradient(1.1px 6.4px at 75% 49%, rgba(255, 215, 0, 0.29) 50%, transparent 50%),
+                radial-gradient(3.0px 8.8px at 62% 44%, rgba(255, 215, 0, 0.29) 50%, transparent 50%),
+                radial-gradient(2.9px 3.8px at 66% -10%, rgba(255, 215, 0, 0.3) 50%, transparent 50%),
+                radial-gradient(1.3px 12.8px at 31% 31%, rgba(255, 215, 0, 0.42) 50%, transparent 50%),
+                radial-gradient(2.4px 7.6px at 77% -15%, rgba(255, 215, 0, 0.66) 50%, transparent 50%),
+                radial-gradient(3.1px 5.2px at 67% 20%, rgba(255, 215, 0, 0.75) 50%, transparent 50%),
+                radial-gradient(1.9px 10.4px at 31% 13%, rgba(255, 215, 0, 0.46) 50%, transparent 50%),
+                radial-gradient(1.0px 9.8px at 41% -11%, rgba(255, 215, 0, 0.64) 50%, transparent 50%),
+                radial-gradient(2.2px 8.6px at 13% -11%, rgba(255, 215, 0, 0.34) 50%, transparent 50%),
+                radial-gradient(2.9px 7.1px at 45% -12%, rgba(255, 215, 0, 0.36) 50%, transparent 50%),
+                radial-gradient(2.3px 13.9px at 70% 18%, rgba(255, 215, 0, 0.71) 50%, transparent 50%),
+                radial-gradient(1.7px 10.3px at 2% 50%, rgba(255, 215, 0, 0.91) 50%, transparent 50%),
+                radial-gradient(1.3px 4.2px at 18% 13%, rgba(255, 215, 0, 0.64) 50%, transparent 50%),
+                radial-gradient(2.3px 10.9px at 35% 16%, rgba(255, 215, 0, 0.39) 50%, transparent 50%),
+                radial-gradient(2.1px 5.8px at 82% 13%, rgba(255, 215, 0, 0.89) 50%, transparent 50%),
+                radial-gradient(2.4px 12.1px at 7% -9%, rgba(255, 215, 0, 0.28) 50%, transparent 50%),
+                radial-gradient(2.4px 5.9px at 43% -4%, rgba(255, 215, 0, 0.77) 50%, transparent 50%),
+                radial-gradient(2.2px 4.2px at 71% 34%, rgba(255, 215, 0, 0.91) 50%, transparent 50%),
+                radial-gradient(2.2px 12.2px at 89% -1%, rgba(255, 215, 0, 0.66) 50%, transparent 50%),
+                radial-gradient(1.3px 6.4px at 19% 35%, rgba(255, 215, 0, 0.88) 50%, transparent 50%),
+                radial-gradient(1.5px 5.7px at 6% 25%, rgba(255, 215, 0, 0.32) 50%, transparent 50%),
+                radial-gradient(3.1px 11.2px at 72% 32%, rgba(255, 215, 0, 0.9) 50%, transparent 50%),
+                radial-gradient(3.1px 11.9px at 31% 0%, rgba(255, 215, 0, 0.87) 50%, transparent 50%),
+                radial-gradient(2.6px 6.7px at 4% 2%, rgba(255, 215, 0, 0.9) 50%, transparent 50%),
+                radial-gradient(1.6px 11.7px at 86% 11%, rgba(255, 215, 0, 0.33) 50%, transparent 50%);
+            animation: goldenRainFall1 15s linear infinite;
+        }
+
+        .golden-rain-bg::after {
+            background: 
+                radial-gradient(1.5px 12.0px at 5% 100%, rgba(255, 215, 0, 0.57) 50%, transparent 50%),
+                radial-gradient(1.5px 10.3px at 40% 69%, rgba(255, 215, 0, 0.53) 50%, transparent 50%),
+                radial-gradient(3.1px 6.1px at 36% 48%, rgba(255, 215, 0, 0.7) 50%, transparent 50%),
+                radial-gradient(1.7px 3.3px at 52% 108%, rgba(255, 215, 0, 0.86) 50%, transparent 50%),
+                radial-gradient(2.3px 13.8px at 34% 62%, rgba(255, 215, 0, 0.28) 50%, transparent 50%),
+                radial-gradient(1.8px 11.7px at 77% 95%, rgba(255, 215, 0, 0.56) 50%, transparent 50%),
+                radial-gradient(1.8px 9.3px at 66% 54%, rgba(255, 215, 0, 0.43) 50%, transparent 50%),
+                radial-gradient(1.0px 13.2px at 91% 95%, rgba(255, 215, 0, 0.63) 50%, transparent 50%),
+                radial-gradient(1.8px 3.8px at 93% 65%, rgba(255, 215, 0, 0.71) 50%, transparent 50%),
+                radial-gradient(1.7px 12.3px at 43% 119%, rgba(255, 215, 0, 0.75) 50%, transparent 50%),
+                radial-gradient(1.7px 7.5px at 39% 104%, rgba(255, 215, 0, 0.53) 50%, transparent 50%),
+                radial-gradient(1.3px 7.6px at 38% 110%, rgba(255, 215, 0, 0.91) 50%, transparent 50%),
+                radial-gradient(2.4px 6.3px at 87% 62%, rgba(255, 215, 0, 0.63) 50%, transparent 50%),
+                radial-gradient(1.6px 7.7px at 1% 78%, rgba(255, 215, 0, 0.66) 50%, transparent 50%),
+                radial-gradient(2.0px 7.9px at 84% 81%, rgba(255, 215, 0, 0.4) 50%, transparent 50%),
+                radial-gradient(2.4px 6.1px at 61% 61%, rgba(255, 215, 0, 0.71) 50%, transparent 50%),
+                radial-gradient(1.2px 13.5px at 80% 82%, rgba(255, 215, 0, 0.41) 50%, transparent 50%),
+                radial-gradient(2.8px 4.6px at 40% 68%, rgba(255, 215, 0, 0.28) 50%, transparent 50%),
+                radial-gradient(2.9px 3.8px at 61% 118%, rgba(255, 215, 0, 0.54) 50%, transparent 50%),
+                radial-gradient(1.4px 10.7px at 81% 113%, rgba(255, 215, 0, 0.6) 50%, transparent 50%),
+                radial-gradient(2.4px 3.1px at 32% 58%, rgba(255, 215, 0, 0.78) 50%, transparent 50%),
+                radial-gradient(2.7px 5.4px at 99% 53%, rgba(255, 215, 0, 0.81) 50%, transparent 50%),
+                radial-gradient(2.0px 9.1px at 90% 106%, rgba(255, 215, 0, 0.89) 50%, transparent 50%),
+                radial-gradient(1.3px 8.1px at 16% 98%, rgba(255, 215, 0, 0.62) 50%, transparent 50%),
+                radial-gradient(1.7px 11.3px at 72% 116%, rgba(255, 215, 0, 0.56) 50%, transparent 50%),
+                radial-gradient(1.9px 13.0px at 93% 104%, rgba(255, 215, 0, 0.56) 50%, transparent 50%),
+                radial-gradient(2.0px 11.3px at 21% 100%, rgba(255, 215, 0, 0.84) 50%, transparent 50%),
+                radial-gradient(2.1px 5.6px at 36% 106%, rgba(255, 215, 0, 0.56) 50%, transparent 50%),
+                radial-gradient(1.5px 6.7px at 92% 76%, rgba(255, 215, 0, 0.88) 50%, transparent 50%),
+                radial-gradient(1.3px 7.2px at 11% 57%, rgba(255, 215, 0, 0.36) 50%, transparent 50%),
+                radial-gradient(1.9px 6.6px at 28% 48%, rgba(255, 215, 0, 0.58) 50%, transparent 50%),
+                radial-gradient(2.8px 7.3px at 8% 66%, rgba(255, 215, 0, 0.79) 50%, transparent 50%),
+                radial-gradient(2.9px 11.4px at 90% 42%, rgba(255, 215, 0, 0.52) 50%, transparent 50%),
+                radial-gradient(1.7px 7.3px at 1% 85%, rgba(255, 215, 0, 0.87) 50%, transparent 50%),
+                radial-gradient(2.6px 9.0px at 54% 108%, rgba(255, 215, 0, 0.67) 50%, transparent 50%),
+                radial-gradient(1.5px 7.8px at 29% 102%, rgba(255, 215, 0, 0.27) 50%, transparent 50%),
+                radial-gradient(2.6px 12.2px at 44% 91%, rgba(255, 215, 0, 0.89) 50%, transparent 50%),
+                radial-gradient(1.1px 7.3px at 80% 108%, rgba(255, 215, 0, 0.65) 50%, transparent 50%),
+                radial-gradient(2.4px 4.5px at 4% 50%, rgba(255, 215, 0, 0.57) 50%, transparent 50%),
+                radial-gradient(1.8px 5.3px at 7% 73%, rgba(255, 215, 0, 0.48) 50%, transparent 50%),
+                radial-gradient(1.6px 13.5px at 98% 88%, rgba(255, 215, 0, 0.55) 50%, transparent 50%),
+                radial-gradient(1.0px 8.9px at 11% 100%, rgba(255, 215, 0, 0.95) 50%, transparent 50%),
+                radial-gradient(2.4px 11.6px at 45% 68%, rgba(255, 215, 0, 0.71) 50%, transparent 50%),
+                radial-gradient(3.1px 5.2px at 97% 43%, rgba(255, 215, 0, 0.26) 50%, transparent 50%),
+                radial-gradient(1.3px 10.4px at 20% 70%, rgba(255, 215, 0, 0.64) 50%, transparent 50%),
+                radial-gradient(2.5px 11.4px at 28% 99%, rgba(255, 215, 0, 0.37) 50%, transparent 50%),
+                radial-gradient(2.7px 4.8px at 78% 54%, rgba(255, 215, 0, 0.47) 50%, transparent 50%),
+                radial-gradient(3.0px 9.3px at 75% 43%, rgba(255, 215, 0, 0.89) 50%, transparent 50%),
+                radial-gradient(3.1px 5.2px at 49% 90%, rgba(255, 215, 0, 0.66) 50%, transparent 50%),
+                radial-gradient(1.2px 11.5px at 81% 71%, rgba(255, 215, 0, 0.85) 50%, transparent 50%),
+                radial-gradient(2.8px 9.2px at 77% 55%, rgba(255, 215, 0, 0.28) 50%, transparent 50%),
+                radial-gradient(2.5px 3.8px at 69% 94%, rgba(255, 215, 0, 0.7) 50%, transparent 50%),
+                radial-gradient(2.8px 4.2px at 2% 93%, rgba(255, 215, 0, 0.92) 50%, transparent 50%),
+                radial-gradient(2.6px 7.8px at 82% 98%, rgba(255, 215, 0, 0.76) 50%, transparent 50%),
+                radial-gradient(2.4px 13.1px at 84% 74%, rgba(255, 215, 0, 0.79) 50%, transparent 50%),
+                radial-gradient(2.8px 9.5px at 60% 95%, rgba(255, 215, 0, 0.48) 50%, transparent 50%),
+                radial-gradient(1.6px 8.0px at 32% 51%, rgba(255, 215, 0, 0.78) 50%, transparent 50%),
+                radial-gradient(2.5px 6.7px at 73% 118%, rgba(255, 215, 0, 0.6) 50%, transparent 50%),
+                radial-gradient(2.1px 6.9px at 42% 63%, rgba(255, 215, 0, 0.43) 50%, transparent 50%),
+                radial-gradient(2.5px 6.0px at 36% 116%, rgba(255, 215, 0, 0.26) 50%, transparent 50%),
+                radial-gradient(1.5px 7.5px at 25% 50%, rgba(255, 215, 0, 0.64) 50%, transparent 50%),
+                radial-gradient(2.4px 8.4px at 31% 100%, rgba(255, 215, 0, 0.81) 50%, transparent 50%),
+                radial-gradient(1.5px 10.6px at 12% 77%, rgba(255, 215, 0, 0.46) 50%, transparent 50%),
+                radial-gradient(2.0px 8.8px at 75% 87%, rgba(255, 215, 0, 0.55) 50%, transparent 50%),
+                radial-gradient(1.7px 10.7px at 96% 110%, rgba(255, 215, 0, 0.44) 50%, transparent 50%),
+                radial-gradient(1.3px 5.1px at 33% 69%, rgba(255, 215, 0, 0.33) 50%, transparent 50%),
+                radial-gradient(1.4px 11.1px at 69% 63%, rgba(255, 215, 0, 0.44) 50%, transparent 50%),
+                radial-gradient(2.3px 13.8px at 76% 107%, rgba(255, 215, 0, 0.83) 50%, transparent 50%),
+                radial-gradient(1.8px 6.3px at 38% 69%, rgba(255, 215, 0, 0.75) 50%, transparent 50%),
+                radial-gradient(1.1px 3.6px at 17% 75%, rgba(255, 215, 0, 0.45) 50%, transparent 50%),
+                radial-gradient(1.2px 3.1px at 17% 102%, rgba(255, 215, 0, 0.45) 50%, transparent 50%),
+                radial-gradient(1.7px 13.6px at 62% 96%, rgba(255, 215, 0, 0.43) 50%, transparent 50%),
+                radial-gradient(2.8px 7.4px at 62% 54%, rgba(255, 215, 0, 0.3) 50%, transparent 50%),
+                radial-gradient(1.3px 11.9px at 81% 46%, rgba(255, 215, 0, 0.91) 50%, transparent 50%),
+                radial-gradient(1.3px 11.4px at 11% 71%, rgba(255, 215, 0, 0.67) 50%, transparent 50%);
+            animation: goldenRainFall2 15s linear infinite;
+            animation-delay: -7.5s;
+        }
+
+        @keyframes goldenRainFall1 {
+            0% { transform: translateY(-100%); opacity: 0; }
+            3% { opacity: 1; }
+            97% { opacity: 1; }
+            100% { transform: translateY(100%); opacity: 0; }
+        }
+
+        @keyframes goldenRainFall2 {
+            0% { transform: translateY(-100%); opacity: 0; }
+            3% { opacity: 1; }
+            97% { opacity: 1; }
+            100% { transform: translateY(100%); opacity: 0; }
+        }
+
+        /* Hero section - brighter */
+        .hero-golden::before,
+        .hero-golden::after {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 640px) {
+            .golden-rain-bg::before,
+            .golden-rain-bg::after {
+                opacity: 0.5;
+            }
+        }
+
+
+        /* Income Calculator */
+        .calc-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #2A2A2A;
+            outline: none;
+            cursor: pointer;
+            margin: 14px 0;
+        }
+        .calc-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #FFD700;
+            cursor: pointer;
+            box-shadow: 0 0 16px rgba(255, 215, 0, 0.5);
+            transition: all 0.2s ease;
+            margin-top: -11px;
+        }
+        .calc-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 24px rgba(255, 215, 0, 0.7);
+        }
+        .calc-slider::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #FFD700;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 16px rgba(255, 215, 0, 0.5);
+        }
+        .calc-slider::-webkit-slider-runnable-track {
+            height: 6px;
+            border-radius: 3px;
+            background: linear-gradient(to right, #FFD700 0%, #FFD700 var(--progress, 0%), #2A2A2A var(--progress, 0%), #2A2A2A 100%);
+        }
+        .calc-slider::-moz-range-track {
+            height: 6px;
+            border-radius: 3px;
+            background: #2A2A2A;
+        }
+    </style>
+
+    
+    
+</head>
+<body class="bg-brand-dark text-white antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-brand-dark/90 backdrop-blur-md border-b border-brand-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-brand-yellow rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight">CIS-<span class="text-white">Mel</span><span class="text-brand-yellow">Bet</span></span>
+                </div>
+                
+                <!-- Menu -->
+                <div class="flex items-center gap-1">
+                    <a href="#" class="hidden sm:inline px-4 py-2 text-sm font-medium text-white hover:text-brand-yellow transition-colors" data-i18n="home">Главная</a>
+                    <a href="#revenue" class="hidden sm:inline px-4 py-2 text-sm font-medium text-gray-400 hover:text-brand-yellow transition-colors" data-i18n="revenue">Доход</a>
+                    <a href="#contacts" class="hidden sm:inline px-4 py-2 text-sm font-medium text-gray-400 hover:text-brand-yellow transition-colors" data-i18n="contacts">Контакты</a>
+                    <button class="ml-2 sm:ml-4 px-4 sm:px-5 py-2 bg-brand-yellow text-black text-sm font-bold rounded-lg hover:bg-yellow-300 transition-colors glow-yellow" data-i18n="start">
+                        Начать
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Language Switcher -->
+    <div id="lang-switcher" class="fixed top-20 left-0 right-0 sm:left-auto sm:right-4 z-40 pointer-events-auto" style="-webkit-transform: translateZ(0);">
+        <div class="flex flex-row sm:flex-col gap-1 bg-brand-card border border-brand-border rounded-xl p-1.5 shadow-xl w-full sm:w-auto">
+            <button class="lang-btn active flex-1 sm:flex-initial h-8 sm:w-8 sm:h-8 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-medium flex items-center justify-center flex-shrink-0" data-lang="ru">RU</button>
+            <button class="lang-btn flex-1 sm:flex-initial h-8 sm:w-8 sm:h-8 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-medium text-gray-400 flex items-center justify-center flex-shrink-0" data-lang="en">EN</button>
+            <button class="lang-btn flex-1 sm:flex-initial h-8 sm:w-8 sm:h-8 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-medium text-gray-400 flex items-center justify-center flex-shrink-0" data-lang="kk">KK</button>
+            <button class="lang-btn flex-1 sm:flex-initial h-8 sm:w-8 sm:h-8 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-medium text-gray-400 flex items-center justify-center flex-shrink-0" data-lang="uz">UZ</button>
+            <button class="lang-btn flex-1 sm:flex-initial h-8 sm:w-8 sm:h-8 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-medium text-gray-400 flex items-center justify-center flex-shrink-0" data-lang="hy">HY</button>
+            <button class="lang-btn flex-1 sm:flex-initial h-8 sm:w-8 sm:h-8 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-medium text-gray-400 flex items-center justify-center flex-shrink-0" data-lang="uk">UK</button>
+            <button class="lang-btn flex-1 sm:flex-initial h-8 sm:w-8 sm:h-8 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-medium text-gray-400 flex items-center justify-center flex-shrink-0" data-lang="ka">KA</button>
+            <button class="lang-btn flex-1 sm:flex-initial h-8 sm:w-8 sm:h-8 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-medium text-gray-400 flex items-center justify-center flex-shrink-0" data-lang="be">BE</button>
+            <button class="lang-btn flex-1 sm:flex-initial h-8 sm:w-8 sm:h-8 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-medium text-gray-400 flex items-center justify-center flex-shrink-0" data-lang="mn">MN</button>
+            <button class="lang-btn flex-1 sm:flex-initial h-8 sm:w-8 sm:h-8 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-medium text-gray-400 flex items-center justify-center flex-shrink-0" data-lang="az">AZ</button>
+            <button class="lang-btn flex-1 sm:flex-initial h-8 sm:w-8 sm:h-8 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-medium text-gray-400 flex items-center justify-center flex-shrink-0" data-lang="tj">TJ</button>
+            <button class="lang-btn flex-1 sm:flex-initial h-8 sm:w-8 sm:h-8 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-medium text-gray-400 flex items-center justify-center flex-shrink-0" data-lang="ro">RO</button>
+        </div>
+    </div>
+
+    <!-- Hero Banner -->
+    <section class="hero-bg pt-32 pb-20 relative golden-rain-bg hero-golden" style="max-width:100vw;">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-brand-yellow rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-yellow-600 rounded-full blur-[150px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <!-- Left: Text Content + Stats -->
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-brand-yellow/10 border border-brand-yellow/20 rounded-full mb-6">
+                    <span class="w-2 h-2 bg-brand-yellow rounded-full animate-pulse"></span>
+                    <span class="text-brand-yellow text-xs font-semibold uppercase tracking-wider" data-i18n="badge">Партнёрская программа 2026</span>
+                </div>
+
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-6 break-words">
+                    <span data-i18n="hero_title_1">Хотите получать</span><br>
+                    <span class="gradient-text text-glow" data-i18n="hero_title_2">прибыль от ставок?</span>
+                </h1>
+
+
+                <p class="text-lg sm:text-xl text-gray-400 mb-8 max-w-xl leading-relaxed" data-i18n="hero_subtitle">
+                    Действуйте прямо сейчас! Не откладывайте. Начните зарабатывать вместе со мной уже сегодня.
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+                    <button class="px-8 py-4 bg-brand-yellow text-black font-bold text-lg rounded-xl hover:bg-yellow-300 transition-all glow-yellow-strong flex items-center gap-2">
+                        <span data-i18n="cta_primary">Перейти в Telegram</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </button>
+                    <a href="#features" onclick="event.preventDefault(); document.getElementById('features').scrollIntoView({behavior: 'smooth'});" class="px-8 py-4 border border-brand-border text-white font-semibold rounded-xl hover:border-brand-yellow hover:text-brand-yellow transition-all inline-flex items-center justify-center cursor-pointer" data-i18n="cta_secondary">
+                        Узнать больше
+                    </a>
+                </div>
+
+                <!-- Mobile MelBet Orbit (visible only on small screens) -->
+                <div class="melbet-orbit-mobile">
+                    <div class="melbet-orbit-container">
+                        <div class="melbet-glow"></div>
+
+                        <!-- Football -->
+                        <div class="orbit-item football-item">
+                            <div class="sport-icon" title="Football">
+                                <img src="https://cdn-icons-png.flaticon.com/512/1099/1099672.png" alt="Football" width="40" height="40" style="object-fit: contain;">
+                            </div>
+                        </div>
+
+                        <!-- Basketball -->
+                        <div class="orbit-item basketball-item">
+                            <div class="sport-icon" title="Basketball">
+                                <img src="https://cdn-icons-png.flaticon.com/512/889/889455.png" alt="Basketball" width="40" height="40" style="object-fit: contain;">
+                            </div>
+                        </div>
+
+                        <!-- Tennis Ball -->
+                        <div class="orbit-item tennis-item tennis-on-top">
+                            <div class="sport-icon sport-icon-small" title="Tennis">
+                                <img src="https://cdn-icons-png.flaticon.com/512/657/657252.png" alt="Tennis" width="20" height="20" style="object-fit: contain;">
+                            </div>
+                        </div>
+
+                        <!-- Center MelBet Text -->
+                        <div class="melbet-center">
+                            <div class="melbet-logo">
+                                <span class="wave-letter text-white" style="animation-delay: 0s">M</span><span class="wave-letter text-white" style="animation-delay: 0.12s">e</span><span class="wave-letter text-white" style="animation-delay: 0.24s">l</span><span class="wave-letter text-brand-yellow" style="animation-delay: 0.36s">B</span><span class="wave-letter text-brand-yellow" style="animation-delay: 0.48s">e</span><span class="wave-letter text-brand-yellow" style="animation-delay: 0.6s">t</span>
+                            </div>
+                            <div class="melbet-subtitle" data-i18n="partner_program">
+                                Партнёрская программа
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Stats -->
+                <div class="mt-16 grid grid-cols-2 gap-8 border-t border-brand-border pt-8">
+                    <div>
+                        <div class="text-3xl font-bold text-brand-yellow">100K+</div>
+                        <div class="text-sm text-gray-500 mt-1" data-i18n="stat_partners">Активных партнёров по всему миру</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-brand-yellow">45+</div>
+                        <div class="text-sm text-gray-500 mt-1" data-i18n="stat_geo">ГЕО по всему миру</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: MelBet Orbital Logo (desktop only) -->
+            <div class="melbet-orbit-wrapper">
+                <div class="melbet-orbit-container">
+                    <!-- Subtle glow -->
+                    <div class="melbet-glow"></div>
+
+                    <!-- Football - Soccer Ball -->
+                    <div class="orbit-item football-item">
+                        <div class="sport-icon" title="Football">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1099/1099672.png" alt="Football" width="40" height="40" style="object-fit: contain;">
+                        </div>
+                    </div>
+
+                    <!-- Basketball -->
+                    <div class="orbit-item basketball-item">
+                        <div class="sport-icon" title="Basketball">
+                            <img src="https://cdn-icons-png.flaticon.com/512/889/889455.png" alt="Basketball" width="40" height="40" style="object-fit: contain;">
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <!-- Center MelBet Text -->
+                    <div class="melbet-center">
+                        <div class="melbet-logo">
+                            <span class="wave-letter text-white" style="animation-delay: 0s">M</span><span class="wave-letter text-white" style="animation-delay: 0.12s">e</span><span class="wave-letter text-white" style="animation-delay: 0.24s">l</span><span class="wave-letter text-brand-yellow" style="animation-delay: 0.36s">B</span><span class="wave-letter text-brand-yellow" style="animation-delay: 0.48s">e</span><span class="wave-letter text-brand-yellow" style="animation-delay: 0.6s">t</span>
+                        </div>
+                        <div class="melbet-subtitle" data-i18n="partner_program">
+                            Партнёрская программа
+                        </div>
+                    </div>
+
+                    <!-- Tennis Ball - on top of MelBet text -->
+                    <div class="orbit-item tennis-item tennis-on-top">
+                        <div class="sport-icon sport-icon-small" title="Tennis">
+                            <img src="https://cdn-icons-png.flaticon.com/512/657/657252.png" alt="Tennis" width="20" height="20" style="object-fit: contain;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+    <!-- NEW DUAL REVENUE MODEL BLOCK -->
+    <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+    <section id="revenue" class="py-24 bg-brand-card relative overflow-hidden">
+        <!-- Background decorative elements -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <div class="absolute top-10 left-1/4 w-96 h-96 bg-brand-yellow rounded-full blur-[150px]"></div>
+            <div class="absolute bottom-10 right-1/4 w-72 h-72 bg-yellow-600 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 revenue-badge rounded-full mb-6">
+                    <svg class="w-4 h-4 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                    <span class="text-brand-yellow text-xs font-semibold uppercase tracking-wider" data-i18n="revenue_badge">Двойной доход</span>
+                </div>
+
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+                    <span data-i18n="revenue_title_1">Два источника</span> 
+                    <span class="gradient-text text-glow" data-i18n="revenue_title_2">прибыли</span>
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto" data-i18n="revenue_subtitle">
+                    Наш партнёр получает доход не только от ставок игроков, но и от каждого их депозита и вывода средств
+                </p>
+            </div>
+
+            <!-- Revenue Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-12">
+
+                <!-- Revenue Card 1: Revenue Share -->
+                <div class="revenue-card bg-brand-dark border border-brand-border rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-yellow/5 rounded-full blur-3xl"></div>
+
+                    <div class="flex items-start gap-5 mb-6">
+                        <div class="revenue-icon w-16 h-16 bg-brand-yellow/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <svg class="w-8 h-8 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-brand-yellow text-sm font-semibold uppercase tracking-wider" data-i18n="rev1_label">Источник 1</span>
+                            <h3 class="text-2xl font-bold mt-1" data-i18n="rev1_title">Процент от ставок</h3>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-400 leading-relaxed mb-6" data-i18n="rev1_desc">
+                        Получайте стабильный процент от каждой ставки, сделанной привлечёнными вами игроками. Чем активнее аудитория — тем выше ваш пассивный доход.
+                    </p>
+
+                    <div class="flex items-center gap-3 bg-brand-card rounded-xl p-4 border border-brand-border">
+                        <div class="w-10 h-10 bg-brand-yellow/10 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-sm font-semibold text-white" data-i18n="rev1_highlight">Реальный доход</div>
+                            <div class="text-xs text-gray-500" data-i18n="rev1_highlight_desc">От всех ставок ваших игроков</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Revenue Card 2: Deposits & Withdrawals -->
+                <div class="revenue-card bg-brand-dark border border-brand-border rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-yellow/5 rounded-full blur-3xl"></div>
+
+                    <div class="flex items-start gap-5 mb-6">
+                        <div class="revenue-icon w-16 h-16 bg-brand-yellow/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <svg class="w-8 h-8 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-brand-yellow text-sm font-semibold uppercase tracking-wider" data-i18n="rev2_label">Источник 2</span>
+                            <h3 class="text-2xl font-bold mt-1" data-i18n="rev2_title">Депозиты и выводы</h3>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-400 leading-relaxed mb-6" data-i18n="rev2_desc">
+                        Зарабатывайте на каждом пополнении счёта и выводе средств игроками. Дополнительный поток дохода, который работает параллельно с основным.
+                    </p>
+
+                    <div class="flex items-center gap-3 bg-brand-card rounded-xl p-4 border border-brand-border">
+                        <div class="w-10 h-10 bg-brand-yellow/10 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-sm font-semibold text-white" data-i18n="rev2_highlight">Ваш капитал</div>
+                            <div class="text-xs text-gray-500" data-i18n="rev2_highlight_desc">За каждую транзакцию игрока</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combination Section -->
+            <div class="result-card bg-gradient-to-br from-brand-yellow/20 via-brand-yellow/10 to-transparent border border-brand-yellow/30 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 text-center relative overflow-hidden">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-brand-yellow/10 rounded-full blur-[100px]"></div>
+
+                <div class="relative z-10">
+                    <!-- Plus Icon -->
+                    <div class="flex items-center justify-center gap-4 mb-8">
+                        <div class="hidden sm:flex items-center gap-3">
+                            <div class="w-12 h-12 bg-brand-yellow/20 rounded-xl flex items-center justify-center">
+                                <svg class="w-6 h-6 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm text-gray-400 font-medium" data-i18n="rev_combine_1">Ставки</span>
+                        </div>
+
+                        <div class="plus-sign w-10 h-10 bg-brand-yellow rounded-full flex items-center justify-center text-black font-bold text-lg shadow-lg shadow-brand-yellow/30">
+                            +
+                        </div>
+
+                        <div class="hidden sm:flex items-center gap-3">
+                            <span class="text-sm text-gray-400 font-medium" data-i18n="rev_combine_2">Транзакции</span>
+                            <div class="w-12 h-12 bg-brand-yellow/20 rounded-xl flex items-center justify-center">
+                                <svg class="w-6 h-6 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl sm:text-3xl font-bold mb-4" data-i18n="rev_result_title">
+                        Объединяем — получаем максимум
+                    </h3>
+                    <p class="text-gray-300 text-lg max-w-2xl mx-auto mb-8" data-i18n="rev_result_desc">
+                        Когда оба источника дохода работают вместе, ваш заработок растёт в геометрической прогрессии. Это не просто выгодно — это революционный подход к партнёрству.
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-2 sm:gap-4 max-w-3xl mx-auto mb-8">
+                        <div class="bg-brand-dark/60 border border-brand-border rounded-xl p-4">
+                            <div class="text-brand-yellow text-2xl font-black mb-1">2×</div>
+                            <div class="text-sm text-gray-400" data-i18n="rev_stat_1">Источника дохода</div>
+                        </div>
+                        <div class="bg-brand-dark/60 border border-brand-border rounded-xl p-4">
+                            <div class="text-brand-yellow text-2xl font-black mb-1">∞</div>
+                            <div class="text-sm text-gray-400" data-i18n="rev_stat_2">Потенциал роста</div>
+                        </div>
+                        <div class="bg-brand-dark/60 border border-brand-border rounded-xl p-4">
+                            <div class="text-brand-yellow text-2xl font-black mb-1">0%</div>
+                            <div class="text-sm text-gray-400" data-i18n="rev_stat_3">Риск потерь</div>
+                        </div>
+                    </div>
+
+                    <button class="px-6 sm:px-10 py-3 sm:py-4 bg-brand-yellow text-black font-bold text-base sm:text-lg rounded-xl hover:bg-yellow-300 transition-all glow-yellow-strong inline-flex items-center gap-2 sm:gap-3 money-float">
+                        <span data-i18n="rev_cta">Начать зарабатывать двойной доход</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bottom Note -->
+            <div class="mt-8 text-center">
+                <p class="text-sm text-gray-500 flex items-center justify-center gap-2">
+                    <span class="w-2 h-2 bg-brand-yellow rounded-full pulse-dot"></span>
+                    <span data-i18n="rev_footer_note">Все выплаты прозрачны и отслеживаются в реальном времени через личный кабинет</span>
+                </p>
+            </div>
+        </div>
+
+    </section>
+    <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <!-- How to Start -->
+    
+    <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+    <!-- INCOME CALCULATOR -->
+    <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+    <section id="calculator" class="py-24 bg-brand-dark relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <div class="absolute top-10 left-1/4 w-96 h-96 bg-brand-yellow rounded-full blur-[150px]"></div>
+            <div class="absolute bottom-10 right-1/4 w-72 h-72 bg-yellow-600 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+                    <span data-i18n="calc_title">Оцените свой доход</span>
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto" data-i18n="calc_subtitle">
+                    Рассчет производится исходя из ежедневного объема транзакций с комиссией 5% с депозита + 2% с вывода игроков
+                </p>
+            </div>
+
+            <!-- Calculator Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
+                <!-- Left: Sliders -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10" style="display: flex; flex-direction: column; gap: 3.5rem;">
+                    <!-- Slider 1: Daily Volume -->
+                    <div style="margin-top: -0.75rem;">
+                        <div class="flex items-center justify-between mb-4">
+                            <label class="text-gray-400 font-semibold text-base sm:text-lg flex-shrink-0" data-i18n="calc_volume_label">Суточный объем ($)</label>
+                            <span class="text-brand-yellow font-bold text-xl sm:text-2xl flex-shrink-0" id="volume-value">$100</span>
+                        </div>
+                        <input 
+                            type="range" 
+                            id="volume-slider" 
+                            min="100" 
+                            max="15000" 
+                            value="100" 
+                            step="100"
+                            class="calc-slider w-full"
+                        >
+                    </div>
+
+                    <!-- Slider 2: Operational Days -->
+                    <div style="margin-top: -0.75rem;">
+                        <div class="flex items-center justify-between mb-4">
+                            <label class="text-gray-400 font-semibold text-base sm:text-lg flex-shrink-0" data-i18n="calc_days_label">Операционные дни</label>
+                            <span class="text-brand-yellow font-bold text-xl sm:text-2xl flex-shrink-0" id="days-value">1 день</span>
+                        </div>
+                        <input 
+                            type="range" 
+                            id="days-slider" 
+                            min="1" 
+                            max="30" 
+                            value="1" 
+                            step="1"
+                            class="calc-slider w-full"
+                        >
+                    </div>
+                </div>
+
+                <!-- Right: Result -->
+                <div class="flex items-center justify-center">
+                    <div class="result-card bg-gradient-to-br from-brand-yellow/20 via-brand-yellow/10 to-transparent border border-brand-yellow/30 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 text-center w-full relative overflow-hidden">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-brand-yellow/10 rounded-full blur-[100px]"></div>
+
+                        <div class="relative z-10">
+                            <div class="text-gray-400 text-base uppercase tracking-wider mb-4" data-i18n="calc_result_label">Ваша предполагаемая комиссия</div>
+                            <div class="text-brand-yellow text-5xl sm:text-6xl lg:text-7xl font-bold mb-4" id="result-amount">$7</div>
+                            <div class="text-gray-500 text-lg sm:text-xl" data-i18n="calc_result_currency">USD в месяц</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Features Grid -->
+    <section id="features" class="py-24 bg-brand-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                    <span data-i18n="features_title_1">Почему выбирают</span> <span class="text-brand-yellow">CIS-MelBet</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto" data-i18n="features_subtitle">Присоединяйтесь к базе партнеров, которые уже начали зарабатывать деньги</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Feature 1 -->
+                <div class="card-hover bg-brand-card border border-brand-border rounded-2xl p-6 sm:p-8">
+                    <div class="w-14 h-14 bg-brand-yellow/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="feat1_title">Получите прибыль</h3>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="feat1_desc">Повторяйте простые действия для гарантированного результата. Никаких сложных стратегий — только чёткие инструкции.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="card-hover bg-brand-card border border-brand-border rounded-2xl p-6 sm:p-8">
+                    <div class="w-14 h-14 bg-brand-yellow/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="feat2_title">Отправить сигнал</h3>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="feat2_desc">Готовые прогнозы прямо в ваши мессенджеры. Telegram и WhatsApp — мгновенные уведомления о лучших возможностях.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="card-hover bg-brand-card border border-brand-border rounded-2xl p-6 sm:p-8">
+                    <div class="w-14 h-14 bg-brand-yellow/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="feat3_title">Я анализирую</h3>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="feat3_desc">Глубокий анализ матчей и статистики для точных прогнозов. Алгоритмы + экспертная оценка = максимальная точность.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="card-hover bg-brand-card border border-brand-border rounded-2xl p-6 sm:p-8">
+                    <div class="w-14 h-14 bg-brand-yellow/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="feat4_title">Чёткая стратегия</h3>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="feat4_desc">Проверенная методология с чёткими правилами входа и выхода. Минимизируйте риски, максимизируйте доход.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="card-hover bg-brand-card border border-brand-border rounded-2xl p-6 sm:p-8">
+                    <div class="w-14 h-14 bg-brand-yellow/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="feat5_title">Экономия времени</h3>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="feat5_desc">Не тратьте часы на анализ. Мы делаем всю работу за вас — вы получаете готовое решение за 30 секунд.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="card-hover bg-brand-card border border-brand-border rounded-2xl p-6 sm:p-8">
+                    <div class="w-14 h-14 bg-brand-yellow/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="feat6_title">Опыт не требуется</h3>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="feat6_desc">Идеально подходит для новичков. Пошаговые инструкции делают процесс понятным с первого дня.</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+<section class="py-24 bg-brand-card relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                    <span data-i18n="steps_title_1">Как</span> <span class="text-brand-yellow" data-i18n="steps_title_2">начать</span>
+                </h2>
+                <p class="text-gray-400" data-i18n="steps_subtitle">Три простых шага до начала сотрудничества</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+
+
+                <!-- Step 1 -->
+                <div class="relative text-center">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-brand-yellow text-black text-xl sm:text-2xl font-black rounded-2xl flex items-center justify-center mx-auto mb-6 relative z-10 shadow-lg shadow-brand-yellow/20">
+                        1
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="step1_title">Обратитесь к нам</h3>
+                    <p class="text-gray-400 px-4" data-i18n="step1_desc">Напишите нам в Telegram-канал. Мы ответим на все ваши вопросы и расскажем о возможностях партнёрства.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative text-center">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-brand-yellow text-black text-xl sm:text-2xl font-black rounded-2xl flex items-center justify-center mx-auto mb-6 relative z-10 shadow-lg shadow-brand-yellow/20">
+                        2
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="step2_title">Подпишитесь</h3>
+                    <p class="text-gray-400 px-4" data-i18n="step2_desc">Подпишитесь на наш Telegram-канал, чтобы получать актуальную информацию, сигналы и новости партнёрской программы.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative text-center">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-brand-yellow text-black text-xl sm:text-2xl font-black rounded-2xl flex items-center justify-center mx-auto mb-6 relative z-10 shadow-lg shadow-brand-yellow/20">
+                        3
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="step3_title">Начните сотрудничество</h3>
+                    <p class="text-gray-400 px-4" data-i18n="step3_desc">Напишите нам и начните сотрудничество. Мы поможем вам на каждом этапе и обеспечим полную поддержку.</p>
+                </div>
+            </div>
+
+
+        </div>
+
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-brand-dark border-y border-brand-border">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-6">
+                <span data-i18n="cta_title_1">Готовы к</span> <span class="text-brand-yellow" data-i18n="cta_title_2">стабильному доходу</span>?
+            </h2>
+            <p class="text-gray-400 text-lg mb-8 max-w-2xl mx-auto" data-i18n="cta_desc">
+                Присоединяйтесь к тысячам партнёров, которые уже зарабатывают вместе с CIS-MelBet по всему миру.
+            </p>
+            <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
+                <button class="px-6 sm:px-8 py-3 bg-brand-yellow text-black font-bold rounded-lg hover:bg-yellow-300 transition-colors text-sm sm:text-base" data-i18n="cta_btn1">
+                    Перейти в Telegram
+                </button>
+                <button class="px-6 sm:px-8 py-3 border border-brand-border text-white font-semibold rounded-lg hover:border-brand-yellow hover:text-brand-yellow transition-all text-sm sm:text-base" data-i18n="cta_btn2">
+                    Написать в поддержку
+                </button>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacts" class="bg-black pt-16 pb-8 border-t border-brand-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 mb-12">
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-brand-yellow rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold">CIS-<span class="text-white">Mel</span><span class="text-brand-yellow">Bet</span></span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed" data-i18n="footer_desc">
+                        Азартные игры сопряжены с риском. Информация предоставлена исключительно в образовательных целях.
+                    </p>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4" data-i18n="footer_nav">Навигация</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-brand-yellow transition-colors" data-i18n="home">Главная</a></li>
+                        <li><a href="#" class="hover:text-brand-yellow transition-colors" data-i18n="about">О платформе</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contacts -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4" data-i18n="footer_contacts">Контакты</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            support@cis-bet.com
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Social -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4" data-i18n="footer_social">Мы в соцсетях</h4>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-brand-card border border-brand-border rounded-lg flex items-center justify-center hover:border-brand-yellow hover:text-brand-yellow transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.015-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.062 3.345-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.442-.751-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.015 3.333-1.386 4.025-1.627 4.477-1.635.099-.002.321.023.465.141.121.099.154.232.17.325.015.093.034.305.019.471z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-brand-card border border-brand-border rounded-lg flex items-center justify-center hover:border-brand-yellow hover:text-brand-yellow transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.13 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-brand-card border border-brand-border rounded-lg flex items-center justify-center hover:border-brand-yellow hover:text-brand-yellow transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-brand-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-600 text-sm">© 2026 CIS-MelBet. <span data-i18n="footer_rights">Все права защищены.</span></p>
+                <div class="flex gap-6 text-sm text-gray-600">
+                    <a href="#" class="hover:text-gray-400 transition-colors" data-i18n="privacy">Политика конфиденциальности</a>
+                    <a href="#" class="hover:text-gray-400 transition-colors" data-i18n="terms">Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            ru: {
+                home: "Главная",
+                contacts: "Контакты",
+                start: "Начать",
+                badge: "Партнёрская программа 2026",
+                hero_title_1: "Хотите получать",
+                hero_title_2: "прибыль от ставок?",
+                hero_subtitle: "Действуйте прямо сейчас! Партнёрство с прозрачным доходом и обоюдной заинтересованностью в результате.",
+                cta_primary: "Перейти в Telegram",
+                cta_secondary: "Узнать условия",
+                stat_partners: "Активных партнёров по всему миру",
+                stat_geo: "ГЕО по всему миру",
+                features_title_1: "Почему выбирают",
+                features_subtitle: "Присоединяйтесь к базе партнеров, которые уже начали зарабатывать деньги",
+                feat1_title: "Получите прибыль",
+                feat1_desc: "Ваши усилия превращаются в реальные деньги без задержек. Чем больше ваша аудитория делает ставки — тем выше ваш доход.",
+                feat2_title: "Личный кабинет",
+                feat2_desc: "Отслеживайте все результаты в реальном времени через личный кабинет.",
+                feat3_title: "Взаимная заинтересованность",
+                feat3_desc: "Мы предоставляем платформу и маркетинговую поддержку, вы привлекаете аудиторию.",
+                feat4_title: "Чёткая стратегия",
+                feat4_desc: "Проверенная методология с чёткими правилами входа и выхода. Минимизируйте риски, максимизируйте доход.",
+                feat5_title: "Гибкость в работе",
+                feat5_desc: "В кратчайшие сроки совместно согласовываем акции и промокоды, чтобы максимизировать доход.",
+                feat6_title: "Опыт не требуется",
+                feat6_desc: "Идеально подходит для новичков. Пошаговые инструкции делают процесс понятным с первого дня.",
+                // Revenue Block — Russian
+                revenue_badge: "Двойной доход",
+                revenue_title_1: "Два источника",
+                revenue_title_2: "прибыли",
+                revenue_subtitle: "Наш партнёр получает доход не только от ставок игроков, но и от каждого их депозита и вывода средств",
+                rev1_label: "Источник 1",
+                rev1_title: "Процент от ставок",
+                rev1_desc: "Получайте стабильный процент от каждой ставки, сделанной привлечёнными вами игроками. Чем активнее аудитория — тем выше ваш пассивный доход.",
+                rev1_highlight: "Реальный доход",
+                rev1_highlight_desc: "С каждой ставки ваших игроков",
+                rev2_label: "Источник 2",
+                rev2_title: "Депозиты и выводы",
+                rev2_desc: "Зарабатывайте на каждом пополнении счёта и выводе средств игроками. Дополнительный поток дохода, который работает параллельно с основным.",
+                rev2_highlight: "Ваш капитал",
+                rev2_highlight_desc: "Растёт с каждой операцией",
+                rev_combine_1: "Ставки",
+                rev_combine_2: "Транзакции",
+                rev_result_title: "Объединяем — получаем максимум",
+                rev_result_desc: "Когда оба источника дохода работают вместе, ваш заработок растёт в геометрической прогрессии. Это не просто выгодно — это революционный подход к партнёрству.",
+                rev_stat_1: "Источника дохода",
+                rev_stat_2: "Потенциал роста",
+                rev_stat_3: "Риск потерь",
+                rev_cta: "Начать зарабатывать двойной доход",
+                rev_footer_note: "Все выплаты прозрачны и отслеживаются в реальном времени через личный кабинет",
+
+                steps_title_1: "Как",
+                steps_title_2: "начать",
+                steps_subtitle: "Три простых шага до начала сотрудничества",
+                step1_title: "Обратитесь к нам",
+                step1_desc: "Напишите нам в Telegram-канал. Мы ответим на все ваши вопросы и расскажем о возможностях партнёрства.",
+                step2_title: "Подпишитесь",
+                step2_desc: "Подпишитесь на наш Telegram-канал, чтобы получать актуальную информацию, сигналы и новости партнёрской программы.",
+                step3_title: "Начните сотрудничество",
+                step3_desc: "Обратитесь к нам и начните сотрудничество. Мы поможем вам на каждом этапе и обеспечим комфортные условия для вашего заработка.",
+                steps_cta: "Начать сейчас",
+                cta_title_1: "Готовы к",
+                cta_title_2: "стабильному доходу",
+                cta_desc: "Присоединяйтесь к тысячам партнёров, которые уже зарабатывают вместе с CIS-MelBet по всему миру.",
+                cta_btn1: "Перейти в Telegram",
+                cta_btn2: "Написать в поддержку",
+                footer_desc: "Азартные игры сопряжены с риском. Информация предоставлена исключительно в образовательных целях.",
+                footer_nav: "Навигация",
+                about: "О платформе",
+                footer_contacts: "Контакты",
+                footer_social: "Мы в соцсетях",
+                footer_rights: "Все права защищены.",
+                privacy: "Политика конфиденциальности",
+                partner_program: "Партнёрская программа",
+                
+                // Calculator
+                calc_title: "Оцените свой доход",
+                calc_subtitle: "Рассчет производится исходя из ежедневного объема транзакций с комиссией 5% с депозита + 2% с вывода игроков",
+                calc_volume_label: "Суточный объем ($)",
+                calc_days_label: "Операционные дни",
+                calc_result_label: "Ваша предполагаемая комиссия",
+                calc_result_currency: "USD в месяц",
+                terms: "Условия использования"
+            },
+            en: {
+                home: "Home",
+                contacts: "Contacts",
+                start: "Start",
+                badge: "Affiliate Program 2026",
+                hero_title_1: "Want to earn",
+                hero_title_2: "from betting?",
+                hero_subtitle: "Act now! Partnership with transparent income and mutual interest in results.",
+                cta_primary: "Go to Telegram",
+                cta_secondary: "View conditions",
+                stat_partners: "Active partners worldwide",
+                stat_geo: "GEOs worldwide",
+                features_title_1: "Why choose",
+                features_subtitle: "Join subscribers who have already started making money",
+                feat1_title: "Earn profit",
+                feat1_desc: "Your efforts turn into real money without delays. The more your audience places bets — the higher your income.",
+                feat2_title: "Personal account",
+                feat2_desc: "Track all results in real time through your personal account.",
+                feat3_title: "Mutual interest",
+                feat3_desc: "We provide the platform and marketing support, you attract the audience.",
+                feat4_title: "Clear strategy",
+                feat4_desc: "Proven methodology with clear entry and exit rules. Minimize risks, maximize income.",
+                feat5_title: "Flexibility at work",
+                feat5_desc: "We jointly agree on promotions and promo codes in the shortest possible time to maximize income.",
+                feat6_title: "No experience needed",
+                feat6_desc: "Perfect for beginners. Step-by-step instructions make the process clear from day one.",
+                // Revenue Block — English
+                revenue_badge: "Dual Revenue",
+                revenue_title_1: "Two sources of",
+                revenue_title_2: "profit",
+                revenue_subtitle: "Our partner earns not only from player bets, but also from every deposit and withdrawal they make",
+                rev1_label: "Source 1",
+                rev1_title: "Percentage from bets",
+                rev1_desc: "Earn a stable percentage from every bet placed by your referred players. The more active your audience — the higher your passive income.",
+                rev1_highlight: "Real income",
+                rev1_highlight_desc: "From every bet of your players",
+                rev2_label: "Source 2",
+                rev2_title: "Deposits & withdrawals",
+                rev2_desc: "Earn on every account top-up and withdrawal made by players. An additional income stream working parallel to the main one.",
+                rev2_highlight: "Growing capital",
+                rev2_highlight_desc: "Grows with every operation",
+                rev_combine_1: "Bets",
+                rev_combine_2: "Transactions",
+                rev_result_title: "Combine — get maximum",
+                rev_result_desc: "When both income sources work together, your earnings grow geometrically. This is not just profitable — it's a revolutionary approach to partnership.",
+                rev_stat_1: "Income sources",
+                rev_stat_2: "Growth potential",
+                rev_stat_3: "Risk of loss",
+                rev_cta: "Start earning dual income",
+                rev_footer_note: "All payouts are transparent and tracked in real time through the personal dashboard",
+
+                steps_title_1: "How to",
+                steps_title_2: "start",
+                steps_subtitle: "Three simple steps to start cooperation",
+                step1_title: "Contact us",
+                step1_desc: "Write to us on Telegram. We will answer all your questions and tell you about partnership opportunities.",
+                step2_title: "Subscribe",
+                step2_desc: "Subscribe to our Telegram channel to receive up-to-date information, signals and affiliate program news.",
+                step3_title: "Start cooperation",
+                step3_desc: "Contact us and start cooperation. We will help you at every stage and provide comfortable conditions for your earnings.",
+                steps_cta: "Start now",
+                cta_title_1: "Ready for",
+                cta_title_2: "stable income",
+                cta_desc: "Join thousands of partners who are already earning with CIS-MelBet around the world.",
+                cta_btn1: "Go to Telegram",
+                cta_btn2: "Contact support",
+                footer_desc: "Gambling involves risk. Information provided for educational purposes only.",
+                footer_nav: "Navigation",
+                about: "About",
+                footer_contacts: "Contacts",
+                footer_social: "Social media",
+                footer_rights: "All rights reserved.",
+                privacy: "Privacy Policy",
+                partner_program: "Partner Program",
+                
+                // Calculator
+                calc_title: "Estimate Your Income",
+                calc_subtitle: "Calculation is based on daily transaction volume with a 5% commission on deposit + 2% on player withdrawal",
+                calc_volume_label: "Daily Volume ($)",
+                calc_days_label: "Operational Days",
+                calc_result_label: "Your Estimated Commission",
+                calc_result_currency: "USD per month",
+                terms: "Terms of Use"
+            },
+            kk: {
+                home: "Басты бет",
+                contacts: "Байланыс",
+                start: "Бастау",
+                badge: "Серіктестік бағдарлама 2026",
+                hero_title_1: "Ставкалардан",
+                hero_title_2: "табыс алғыңыз келе ме?",
+                hero_subtitle: "Қазір әрекет етіңіз! Ашық табыспен және нәтижеге өзара қызығушылықпен серіктестік.",
+                cta_primary: "Telegram-ға өту",
+                cta_secondary: "Шарттарды білу",
+                stat_partners: "Бүкіл әлемдегі белсенді серіктестер",
+                stat_geo: "Бүкіл әлемдегі ГЕО",
+                features_title_1: "Неліктен",
+                features_subtitle: "Ақша табуды бастаған жазылушыларға қосылыңыз",
+                feat1_title: "Табыс алыңыз",
+                feat1_desc: "Сіздің күш-жігеріңіз кешіктірмей нақты ақшайға айналады. Сіздің аудиторияңыз неғұрлым көп ставка жасаса — сіздің табысыңыз соғұрлым жоғары.",
+                feat2_title: "Жеке кабинет",
+                feat2_desc: "Барлық нәтижелерді жеке кабинет арқылы нақты уақытта бақылаңыз.",
+                feat3_title: "Өзара қызығушылық",
+                feat3_desc: "Біз платформа және маркетингтік қолдау көрсетеміз, сіз аудиторияны тартасыз.",
+                feat4_title: "Нақты стратегия",
+                feat4_desc: "Нақты кіру және шығу ережелерімен тексерілген әдіснама. Қауіптерді азайтыңыз, табысты арттырыңыз.",
+                feat5_title: "Жұмыстағы икемділік",
+                feat5_desc: "Табысты максималды деңгейге жеткізу үшін акциялар мен промокодтарды ең қысқа мерзімде бірлесіп келісеміз.",
+                feat6_title: "Тәжірибе қажет емес",
+                feat6_desc: "Бастаушылар үшін тамаша. Қадамдық нұсқаулар процесті бірінші күннен түсінікті етеді.",
+                // Revenue Block — Kazakh
+                revenue_badge: "Қосарлы табыс",
+                revenue_title_1: "Екі табыс",
+                revenue_title_2: "көзі",
+                revenue_subtitle: "Біздің серіктесіміз ойыншылардың ставкаларынан ғана емес, сонымен қатар олардың әрбір депозиті мен қаражат шығаруынан да табыс алады",
+                rev1_label: "Көз 1",
+                rev1_title: "Ставкалардан пайыз",
+                rev1_desc: "Сіз тартқан ойыншылар жасаған әрбір ставкадан тұрақты пайыз алыңыз. Аудитория неғұрлым белсенді болса — сіздің пассив табысыңыз соғұрлым жоғары.",
+                rev1_highlight: "Өмір бойы табыс",
+                rev1_highlight_desc: "Ойыншыларыңыздың барлық ставкаларынан",
+                rev2_label: "Көз 2",
+                rev2_title: "Депозиттер мен шығару",
+                rev2_desc: "Ойыншылардың әрбір шот толтыруы мен қаражат шығаруына табыс табыңыз. Негізгімен қатар жұмыс істейтін қосымша табыс ағыны.",
+                rev2_highlight: "Лездік төлемдер",
+                rev2_highlight_desc: "Ойыншының әрбір транзакциясы үшін",
+                rev_combine_1: "Ставкалар",
+                rev_combine_2: "Транзакциялар",
+                rev_result_title: "Біріктіреміз — максимум аламыз",
+                rev_result_desc: "Екі табыс көзі бірге жұмыс істегенде, сіздің табысыңыз геометриялық прогрессияда өседі. Бұл тек тиімді емес — бұл серіктестікке революциялық көзқарас.",
+                rev_stat_1: "Табыс көзі",
+                rev_stat_2: "Өсу потенциалы",
+                rev_stat_3: "Жоғалту қаупі",
+                rev_cta: "Қосарлы табыс табуды бастаңыз",
+                rev_footer_note: "Барлық төлемдер ашық және жеке кабинет арқылы нақты уақытта бақылауда",
+
+                steps_title_1: "Қалай",
+                steps_title_2: "бастау керек",
+                steps_subtitle: "Серіктестікті бастау үшін үш қарапайым қадам",
+                step1_title: "Бізге хабарласыңыз",
+                step1_desc: "Telegram-да бізге жазыңыз. Барлық сұрақтарыңызға жауап береміз және серіктестік мүмкіндіктері туралы айтып береміз.",
+                step2_title: "Жазылыңыз",
+                step2_desc: "Актуалды ақпарат, сигналдар және серіктестік бағдарламасы жаңалықтарын алу үшін Telegram арнамызға жазылады.",
+                step3_title: "Серіктестікті бастаңыз",
+                step3_desc: "Бізге хабарласыңыз және серіктестікті бастаңыз. Біз сізге әр кезеңде көмектесеміз және сіздің табысыңыз үшін ыңғайлы жағдайлар жасаймыз.",
+                steps_cta: "Қазір бастау",
+                cta_title_1: "Тұрақты табысқа",
+                cta_title_2: "дайынсыз ба",
+                cta_desc: "Бүкіл әлемде CIS-MelBet-пен бірге табыс табып жатқан мыңдаған серіктестерге қосылыңыз.",
+                cta_btn1: "Telegram-ға өту",
+                cta_btn2: "Қолдау қызметіне жазу",
+                footer_desc: "Азартты ойындар қауіпті. Ақпарат тек білім беру мақсатында берілген.",
+                footer_nav: "Навигация",
+                about: "Платформа туралы",
+                footer_contacts: "Байланыс",
+                footer_social: "Әлеуметтік желілер",
+                footer_rights: "Барлық құқықтар қорғалған.",
+                privacy: "Құпиялылық саясаты",
+                partner_program: "Серіктестік бағдарлама",
+                
+                // Calculator
+                calc_title: "Табысыңызды бағалаңыз",
+                calc_subtitle: "Есептеу күндізгі транзакциялар көлеміне негізделген, депозитке 5% + ойыншының шығаруына 2% комиссия",
+                calc_volume_label: "Күндік көлем ($)",
+                calc_days_label: "Операциялық күндер",
+                calc_result_label: "Сіздің болжамды комиссияңыз",
+                calc_result_currency: "Айына USD",
+                terms: "Пайдалану шарттары"
+            },
+            uz: {
+                home: "Bosh sahifa",
+                contacts: "Aloqa",
+                start: "Boshlash",
+                badge: "Hamkorlik dasturi 2026",
+                hero_title_1: "Stavkalardan",
+                hero_title_2: "foyda olmoqchimisiz?",
+                hero_subtitle: "Hozir harakat qiling! Shaffof daromad va natijaga o'zaro qiziqish bilan hamkorlik.",
+                cta_primary: "Telegram-ga o'tish",
+                cta_secondary: "Shartlarni bilish",
+                stat_partners: "Butun dunyodagi faol hamkorlar",
+                stat_geo: "Butun dunyodagi GEO",
+                features_title_1: "Nima uchun",
+                features_subtitle: "Pul ishlashni boshlagan obunachilarga qo'shiling",
+                feat1_title: "Foyda oling",
+                feat1_desc: "Sizning harakatlaringiz kechikishsiz haqiqiy pulga aylanadi. Sizning auditoriyangiz qanchalik ko'p stavka qo'ysa — sizning daromadingiz shunchalik yuqori.",
+                feat2_title: "Shaxsiy kabinet",
+                feat2_desc: "Barcha natijalarni shaxsiy kabinet orqali real vaqtda kuzatib boring.",
+                feat3_title: "O'zaro qiziqish",
+                feat3_desc: "Biz platforma va marketing qo'llab-quvvatlashni taqdim etamiz, siz auditoriyani jalb qilasiz.",
+                feat4_title: "Aniq strategiya",
+                feat4_desc: "Aniq kirish va chiqish qoidalari bilan tasdiqlangan metodologiya. Xavflarni kamaytiring, daromadni oshiring.",
+                feat5_title: "Ishdagi moslashuvchanlik",
+                feat5_desc: "Daromadni maksimal darajaga yetkazish uchun aksiyalar va promokodlarni eng qisqa muddatda birgalikda kelishamiz.",
+                feat6_title: "Tajriba talab etilmaydi",
+                feat6_desc: "Yangi boshlovchilar uchun ajoyib. Qadamba-qadam ko'rsatmalar jarayonni birinchi kundan tushunarliv qiladi.",
+                // Revenue Block — Uzbek
+                revenue_badge: "Ikki tomonlama daromad",
+                revenue_title_1: "Ikki foyda",
+                revenue_title_2: "manbai",
+                revenue_subtitle: "Bizning hamkorimiz nafaqat o'yinchilarning stavkalaridan, balki ularning har bir depoziti va mablag' chiqarishidan ham daromad oladi",
+                rev1_label: "Manba 1",
+                rev1_title: "Stavkalardan foiz",
+                rev1_desc: "Siz jalb qilgan o'yinchilar qo'ygan har bir stavkadan barqaror foiz oling. Auditoriya qanchalik faol bo'lsa — sizning passiv daromadingiz shunchalik yuqori.",
+                rev1_highlight: "Umrbod daromad",
+                rev1_highlight_desc: "O'yinchilaringizning barcha stavkalaridan",
+                rev2_label: "Manba 2",
+                rev2_title: "Depozitlar va chiqarish",
+                rev2_desc: "O'yinchilar tomonidan amalga oshirilgan har bir hisobni to'ldirish va mablag' chiqarishdan daromad oling. Asosiy bilan parallel ishlaydigan qo'shimcha daromad oqimi.",
+                rev2_highlight: "Tezkor to'lovlar",
+                rev2_highlight_desc: "Har bir o'yinchining tranzaksiyasi uchun",
+                rev_combine_1: "Stavkalar",
+                rev_combine_2: "Tranzaksiyalar",
+                rev_result_title: "Birlashtiramiz — maksimum olamiz",
+                rev_result_desc: "Ikkala daromad manbai birga ishlayotganda, sizning daromadingiz geometrik progressiyada o'sadi. Bu nafaqat foydali — bu hamkorlikka inqilobiy yondashuv.",
+                rev_stat_1: "Daromad manbai",
+                rev_stat_2: "O'sish potensiali",
+                rev_stat_3: "Yo'qotish xavfi",
+                rev_cta: "Ikki tomonlama daromad olishni boshlang",
+                rev_footer_note: "Barcha to'lovlar shaffof va shaxsiy kabinet orqali real vaqtda kuzatiladi",
+
+                steps_title_1: "Qanday",
+                steps_title_2: "boshlash",
+                steps_subtitle: "Hamkorlikni boshlash uchun uch oddiy qadam",
+                step1_title: "Bizga murojaat qiling",
+                step1_desc: "Telegram-da bizga yozing. Barcha savollaringizga javob beramiz va hamkorlik imkoniyatlari haqida aytib beramiz.",
+                step2_title: "Obuna bo'ling",
+                step2_desc: "Aktual ma'lumotlar, signallar va hamkorlik dasturi yangiliklarini olish uchun Telegram kanalimizga obuna bo'ling.",
+                step3_title: "Hamkorlikni boshlang",
+                step3_desc: "Bizga murojaat qiling va hamkorlikni boshlang. Biz sizga har bir bosqichda yordam beramiz va sizning daromadingiz uchun qulay sharoitlar yaratamiz.",
+                steps_cta: "Hozir boshlash",
+                cta_title_1: "Barqaror daromadga",
+                cta_title_2: "tayyormisiz",
+                cta_desc: "Butun dunyoda CIS-MelBet bilan birga daromad olayotgan minglab hamkorlarga qo'shiling.",
+                cta_btn1: "Telegram-ga o'tish",
+                cta_btn2: "Qo'llab-quvvatlashga yozish",
+                footer_desc: "Qimor o'yinlari xavfli. Ma'lumot faqat ta'lim maqsadlarida taqdim etilgan.",
+                footer_nav: "Navigatsiya",
+                about: "Platforma haqida",
+                footer_contacts: "Aloqa",
+                footer_social: "Ijtimoiy tarmoqlar",
+                footer_rights: "Barcha huquqlar himoyalangan.",
+                privacy: "Maxfiylik siyosati",
+                partner_program: "Hamkorlik dasturi",
+                
+                // Calculator
+                calc_title: "Daromadingizni baholang",
+                calc_subtitle: "Hisoblash kunlik tranzaksiya hajmiga asoslangan, depozitga 5% + o'yinchining chiqarilishiga 2% komissiya",
+                calc_volume_label: "Kunlik hajm ($)",
+                calc_days_label: "Operatsion kunlar",
+                calc_result_label: "Sizning taxminiy komissiyangiz",
+                calc_result_currency: "Oyiga USD",
+                terms: "Foydalanish shartlari"
+            },
+            hy: {
+                home: "Գլխավոր",
+                contacts: "Կոնտակտներ",
+                start: "Սկսել",
+                badge: "Գործընկերային ծրագիր 2026",
+                hero_title_1: "Ցանկանու՞մ եք",
+                hero_title_2: "շահույթ ստանալ",
+                hero_subtitle: "Գործեք հիմա: Գործընկերություն թափանցիկ եկամտով և փոխադարձ հետաքրքրությամբ արդյունքների նկատմամբ:",
+                cta_primary: "Telegram անցնել",
+                cta_secondary: "Իմանալ պայմանները",
+                stat_partners: "Ակտիվ գործընկերներ ամբողջ աշխարհում",
+                stat_geo: "GEO ամբողջ աշխարհում",
+                features_title_1: "Ինչու են ընտրում",
+                features_subtitle: "Միացեք բաժանորդներին, որոնք արդեն սկսել են գումար վաստակել",
+                feat1_title: "Ստացեք շահույթ",
+                feat1_desc: "Ձեր ջանքերը վերածվում են իրական փողի՝ առանց ուշացումների: Որքան շատ է ձեր լսարանը դրումներ կատարում — այնքան բարձր է ձեր եկամուտը:",
+                feat2_title: "Անհատական աշխատասենյակ",
+                feat2_desc: "Հետևեք բոլոր արդյունքներին իրական ժամանակում անհատական աշխատասենյակի միջոցով:",
+                feat3_title: "Փոխադարձ հետաքրքրություն",
+                feat3_desc: "Մենք տրամադրում ենք հարթակ և մարքեթինգային աջակցություն, դուք գրավում եք լսարանը:",
+                feat4_title: "Հստակ ռազմավարություն",
+                feat4_desc: "Ստուգված մեթոդաբանություն հստակ մուտքի և ելքի կանոններով: Նվազեցրեք ռիսկերը, առավելացրեք եկամուտը:",
+                feat5_title: "Աշխատանքի ճկունություն",
+                feat5_desc: "Մենք համատեղ համաձայնեցնում ենք ակցիաներ և պրոմոկոդներ ամենակարճ ժամկետներում՝ եկամուտը առավելագույնի հասցնելու համար:",
+                feat6_title: "Փորձ չի պահանջվում",
+                feat6_desc: "Իդեալական է սկսնակների համար: Քայլ առ քայլ հրահանգները գործընթացը հասկանալի են դարձնում առաջին օրվանից:",
+                // Revenue Block — Armenian
+                revenue_badge: "Կրկնակի եկամուտ",
+                revenue_title_1: "Երկու շահույթի",
+                revenue_title_2: "աղբյուր",
+                revenue_subtitle: "Մեր գործընկերը եկամուտ է ստանում ոչ միայն խաղացողների խաղադրույքներից, այլև նրանց յուրաքանչյուր ավանդից և միջոցների հանելուց",
+                rev1_label: "Աղբյուր 1",
+                rev1_title: "Տոկոս խաղադրույքներից",
+                rev1_desc: "Ստացեք կայուն տոկոս ձեր ներգրաված խաղացողների կատարած յուրաքանչյուր խաղադրույքից: Որքան ակտիվ է լսարանը — այնքան բարձր է ձեր պասիվ եկամուտը:",
+                rev1_highlight: "Կյանքի եկամուտ",
+                rev1_highlight_desc: "Ձեր խաղացողների բոլոր խաղադրույքներից",
+                rev2_label: "Աղբյուր 2",
+                rev2_title: "Ավանդներ և հանում",
+                rev2_desc: "Շահույթ ստացեք խաղացողների կողմից կատարված յուրաքանչյուր հաշվի լրացումից և միջոցների հանելուց: Հավելյալ եկամտի հոսք, որը աշխատում է հիմնականի հետ զուգահեռ:",
+                rev2_highlight: "Անմիջական վճարումներ",
+                rev2_highlight_desc: "Խաղացողի յուրաքանչյուր գործարքի համար",
+                rev_combine_1: "Խաղադրույքներ",
+                rev_combine_2: "Գործարքներ",
+                rev_result_title: "Միավորում ենք — ստանում ենք առավելագույնը",
+                rev_result_desc: "Երբ եկամտի երկու աղբյուրներն աշխատում են միասին, ձեր եկամուտն աճում է երկրաչափական պրոգրեսիայով: Սա ոչ միայն շահավետ է — սա գործընկերության հեղափոխական մոտեցում է:",
+                rev_stat_1: "Եկամտի աղբյուր",
+                rev_stat_2: "Աճի պոտենցիալ",
+                rev_stat_3: "Վնասի ռիսկ",
+                rev_cta: "Սկսեք կրկնակի եկամուտ ստանալ",
+                rev_footer_note: "Բոլոր վճարումները թափանցիկ են և հետևվում են անհատական աշխատասենյակի միջոցով իրական ժամանակում",
+
+                steps_title_1: "Ինչպես",
+                steps_title_2: "սկսել",
+                steps_subtitle: "Երեք պարզ քայլ համագործակցություն սկսելու համար",
+                step1_title: "Դիմեք մեզ",
+                step1_desc: "Գրեք մեզ Telegram-ում: Մենք կպատասխանենք ձեր բոլոր հարցերին և կպատմենք գործընկերության հնարավորությունների մասին:",
+                step2_title: "Բաժանորդագրվեք",
+                step2_desc: "Բաժանորդագրվեք մեր Telegram ալիքին՝ արդիական տեղեկատվություն, ազդանշաններ և գործընկերային ծրագրի նորություններ ստանալու համար:",
+                step3_title: "Սկսեք համագործակցել",
+                step3_desc: "Դիմեք մեզ և սկսեք համագործակցել: Մենք կօգնենք ձեզ յուրաքանչյուր փուլում և կապահովենք հարմար պայմաններ ձեր եկամտի համար:",
+                steps_cta: "Սկսել հիմա",
+                cta_title_1: "Պատրա՞ստ եք",
+                cta_title_2: "կայուն եկամտի",
+                cta_desc: "Միացեք հազարավոր գործընկերներին, որոնք արդեն վաստակում են CIS-MelBet-ի հետ ամբողջ աշխարհում:",
+                cta_btn1: "Telegram անցնել",
+                cta_btn2: "Գրել աջակցությանը",
+                footer_desc: "Ազարտային խաղերը ռիսկային են: Տեղեկատվությունը տրամադրվում է բացառապես կրթական նպատակներով:",
+                footer_nav: "Նավիգացիա",
+                about: "Պլատֆորմի մասին",
+                footer_contacts: "Կոնտակտներ",
+                footer_social: "Սոցիալական ցանցեր",
+                footer_rights: "Բոլոր իրավունքները պաշտպանված են:",
+                privacy: "Գաղտնիության քաղաքականություն",
+                partner_program: "Գործընկերային ծրագիր",
+                
+                // Calculator
+                calc_title: "Գնահատեք ձեր եկամուտը",
+                calc_subtitle: "Հաշվարկը հիմնված է օրական գործարքների ծավալի վրա՝ 5% միջնորդավճար ավանդի + 2% խաղացողի ելքի համար",
+                calc_volume_label: "Օրական ծավալ ($)",
+                calc_days_label: "Օպերացիոն օրեր",
+                calc_result_label: "Ձեր կանխատեսված միջնորդավճարը",
+                calc_result_currency: "USD ամսական",
+                terms: "Օգտագործման պայմաններ"
+            },
+            uk: {
+                home: "Головна",
+                contacts: "Контакти",
+                start: "Почати",
+                badge: "Партнерська програма 2026",
+                hero_title_1: "Хочете отримувати",
+                hero_title_2: "прибуток від ставок?",
+                hero_subtitle: "Дійте прямо зараз! Партнерство з прозорим доходом і взаємною зацікавленістю в результаті.",
+                cta_primary: "Перейти в Telegram",
+                cta_secondary: "Дізнатися умови",
+                stat_partners: "Активних партнерів по всьому світу",
+                stat_geo: "ГЕО по всьому світу",
+                features_title_1: "Чому обирають",
+                features_subtitle: "Приєднуйтесь до підписників, які вже почали заробляти гроші",
+                feat1_title: "Отримайте прибуток",
+                feat1_desc: "Ваші зусилля перетворюються на реальні гроші без затримок. Чим більше ваша аудиторія робить ставки — тим вищий ваш дохід.",
+                feat2_title: "Особистий кабінет",
+                feat2_desc: "Відстежуйте всі результати в реальному часі через особистий кабінет.",
+                feat3_title: "Взаємна зацікавленість",
+                feat3_desc: "Ми надаємо платформу та маркетингову підтримку, ви залучаєте аудиторію.",
+                feat4_title: "Чітка стратегія",
+                feat4_desc: "Перевірена методологія з чіткими правилами входу та виходу. Мінімізуйте ризики, максимізуйте дохід.",
+                feat5_title: "Гнучкість у роботі",
+                feat5_desc: "У найкоротші терміни спільно погоджуємо акції та промокоди, щоб максимізувати дохід.",
+                feat6_title: "Досвід не потрібен",
+                feat6_desc: "Ідеально підходить для новачків. Покрокові інструкції роблять процес зрозумілим із першого дня.",
+                // Revenue Block — Ukrainian
+                revenue_badge: "Подвійний дохід",
+                revenue_title_1: "Два джерела",
+                revenue_title_2: "прибутку",
+                revenue_subtitle: "Наш партнер отримує дохід не лише від ставок гравців, але й від кожного їхнього депозиту та виведення коштів",
+                rev1_label: "Джерело 1",
+                rev1_title: "Відсоток від ставок",
+                rev1_desc: "Отримуйте стабільний відсоток від кожної ставки, зробленої залученими вами гравцями. Чим активніша аудиторія — тим вищий ваш пасивний дохід.",
+                rev1_highlight: "Довічний дохід",
+                rev1_highlight_desc: "Від усіх ставок ваших гравців",
+                rev2_label: "Джерело 2",
+                rev2_title: "Депозити та виведення",
+                rev2_desc: "Заробляйте на кожному поповненні рахунку та виведенні коштів гравцями. Додатковий потік доходу, який працює паралельно з основним.",
+                rev2_highlight: "Миттєві виплати",
+                rev2_highlight_desc: "За кожну транзакцію гравця",
+                rev_combine_1: "Ставки",
+                rev_combine_2: "Транзакції",
+                rev_result_title: "Об'єднуємо — отримуємо максимум",
+                rev_result_desc: "Коли обидва джерела доходу працюють разом, ваш заробіток зростає в геометричній прогресії. Це не просто вигідно — це революційний підхід до партнерства.",
+                rev_stat_1: "Джерела доходу",
+                rev_stat_2: "Потенціал зростання",
+                rev_stat_3: "Ризик втрат",
+                rev_cta: "Почати заробляти подвійний дохід",
+                rev_footer_note: "Всі виплати прозорі та відстежуються в реальному часі через особистий кабінет",
+
+                steps_title_1: "Як",
+                steps_title_2: "почати",
+                steps_subtitle: "Три прості кроки до початку співпраці",
+                step1_title: "Зверніться до нас",
+                step1_desc: "Напишіть нам у Telegram. Ми відповімо на всі ваші запитання та розповімо про можливості партнерства.",
+                step2_title: "Підпишіться",
+                step2_desc: "Підпишіться на наш Telegram-канал, щоб отримувати актуальну інформацію, сигнали та новини партнерської програми.",
+                step3_title: "Почніть співпрацю",
+                step3_desc: "Зверніться до нас і почніть співпрацю. Ми допоможемо вам на кожному етапі та забезпечимо комфортні умови для вашого заробітку.",
+                steps_cta: "Почати зараз",
+                cta_title_1: "Готові до",
+                cta_title_2: "стабільного доходу",
+                cta_desc: "Приєднуйтесь до тисяч партнерів, які вже заробляють разом із CIS-MelBet по всьому світу.",
+                cta_btn1: "Перейти в Telegram",
+                cta_btn2: "Написати в підтримку",
+                footer_desc: "Азартні ігри пов'язані з ризиком. Інформація надана виключно в освітніх цілях.",
+                footer_nav: "Навігація",
+                about: "Про платформу",
+                footer_contacts: "Контакти",
+                footer_social: "Ми в соцмережах",
+                footer_rights: "Усі права захищені.",
+                privacy: "Політика конфіденційності",
+                partner_program: "Партнерська програма",
+                
+                // Calculator
+                calc_title: "Оцініть свій дохід",
+                calc_subtitle: "Розрахунок проводиться виходячи з щоденного обсягу транзакцій з комісією 5% з депозиту + 2% з виведення гравців",
+                calc_volume_label: "Добовий обсяг ($)",
+                calc_days_label: "Операційні дні",
+                calc_result_label: "Ваша передбачувана комісія",
+                calc_result_currency: "USD на місяць",
+                terms: "Умови використання"
+            },
+            ka: {
+                home: "მთავარი",
+                contacts: "კონტაქტები",
+                start: "დაწყება",
+                badge: "პარტნიორული პროგრამა 2026",
+                hero_title_1: "გსურთ",
+                hero_title_2: "მიიღოთ მოგება?",
+                hero_subtitle: "იმოქმედეთ ახლავე! პარტნიორობა გამჭვირვალე შემოსავლით და თანაზიარე ინტერესით შედეგის მიმართ.",
+                cta_primary: "Telegram-ზე გადასვლა",
+                cta_secondary: "პირობების ნახვა",
+                stat_partners: "აქტიური პარტნიორები მთელს მსოფლიოში",
+                stat_geo: "GEO მთელს მსოფლიოში",
+                features_title_1: "რატომ ირჩევენ",
+                features_subtitle: "შეუერთდით გამომწერებს, რომლებმაც უკვე დაიწყეს ფულის გამომუშავება",
+                feat1_title: "მიიღეთ მოგება",
+                feat1_desc: "თქვენი მცდელობები ხდება რეალურ ფულად დაყოვნების გარეშე. რაც მეტად აკეთებს თქვენი აუდიტორია ფსონებს — მით მაღალია თქვენი შემოსავალი.",
+                feat2_title: "პირადი კაბინეტი",
+                feat2_desc: "თვალყური ადევნეთ ყველა შედეგს რეალურ დროში პირადი კაბინეტის საშუალებით.",
+                feat3_title: "თანაზიარე ინტერესი",
+                feat3_desc: "ჩვენ ვაწვდით პლატფორმას და მარკეტინგულ მხარდაჭერას, თქვენ იზიდავთ აუდიტორიას.",
+                feat4_title: "ნათელი სტრატეგია",
+                feat4_desc: "შემოწმებული მეთოდოლოგია ნათელი შესვლისა და გამოსვლის წესებით. შეამცირეთ რისკები, გაზარდეთ შემოსავალი.",
+                feat5_title: "მუშაობის მოქნილობა",
+                feat5_desc: "ჩვენ ერთად ვთანხმდებით აქციებსა და პრომოკოდებს ყველაზე მოკლე ვადებში, რომ მაქსიმალურად გავზარდოთ შემოსავალი.",
+                feat6_title: "გამოცდილება არ არის საჭირო",
+                feat6_desc: "იდეალურია დამწყებთათვის. ნაბიჯ-ნაბიჯ ინსტრუქციები პროცესს გასაგებს ხდის პირველი დღიდან.",
+                // Revenue Block — Georgian
+                revenue_badge: "ორმაგი შემოსავალი",
+                revenue_title_1: "ორი მოგების",
+                revenue_title_2: "წყარო",
+                revenue_subtitle: "ჩვენი პარტნიორი შემოსავალს იღებს არა მხოლოდ მოთამაშეების ფსონებიდან, არამედ მათი თითოეული დეპოზიტიდან და თანხის გამოთხოვიდან",
+                rev1_label: "წყარო 1",
+                rev1_title: "პროცენტი ფსონებიდან",
+                rev1_desc: "მიიღეთ სტაბილური პროცენტი თითოეული ფსონიდან, რომელიც თქვენი მოზიდული მოთამაშეების მიერ გაკეთდა. რაც უფრო აქტიურია აუდიტორია — მით უფრო მაღალია თქვენი პასიური შემოსავალი.",
+                rev1_highlight: "სამუდამო შემოსავალი",
+                rev1_highlight_desc: "თქვენი მოთამაშეების ყველა ფსონიდან",
+                rev2_label: "წყარო 2",
+                rev2_title: "დეპოზიტები და გამოთხოვა",
+                rev2_desc: "იშოვეთ თითოეულ ანგარიშის შევსებასა და მოთამაშეების მიერ თანხის გამოთხოვაზე. დამატებითი შემოსავლის ნაკადი, რომელიც მუშაობს ძირითადთან პარალელურად.",
+                rev2_highlight: "მყისიერი გადახდები",
+                rev2_highlight_desc: "მოთამაშის თითოეული ტრანზაქციისთვის",
+                rev_combine_1: "ფსონები",
+                rev_combine_2: "ტრანზაქციები",
+                rev_result_title: "გაერთიანება — მაქსიმუმის მიღება",
+                rev_result_desc: "როდესაც შემოსავლის ორივე წყარო ერთად მუშაობს, თქვენი შემოსავალი გეომეტრიულ პროგრესიაში იზრდება. ეს არა მხოლოდ მომგებიანია — ეს პარტნიორობის რევოლუციური მიდგომაა.",
+                rev_stat_1: "შემოსავლის წყარო",
+                rev_stat_2: "ზრდის პოტენციალი",
+                rev_stat_3: "წარუმატებლობის რისკი",
+                rev_cta: "ორმაგი შემოსავლის დაწყება",
+                rev_footer_note: "ყველა გადახდა გამჭვირვალეა და თვალყურს ადევნებს პირადი კაბინეტის საშუალებით რეალურ დროში",
+
+                steps_title_1: "როგორ",
+                steps_title_2: "დავიწყოთ",
+                steps_subtitle: "სამი მარტივი ნაბიჯი თანამშრომლობის დასაწყებად",
+                step1_title: "მიმართეთ ჩვენ",
+                step1_desc: "დაგვიკავშირდით Telegram-ზე. ჩვენ ვუპასუხებთ თქვენს ყველა კითხვას და მოგიყვებით პარტნიორობის შესაძლებლობების შესახებ.",
+                step2_title: "გამოიწერეთ",
+                step2_desc: "გამოიწერეთ ჩვენი Telegram არხი აქტუალური ინფორმაციის, სიგნალებისა და პარტნიორული პროგრამის სიახლეების მისაღებად.",
+                step3_title: "დაიწყეთ თანამშრომლობა",
+                
+                step3_desc: "მიმართეთ ჩვენ და დაიწყეთ თანამშრომლობა. ჩვენ დაგეხმარებით ყველა ეტაპზე და უზრუნველყოფთ კომფორტულ პირობებს თქვენი შემოსავლისთვის.",
+                steps_cta: "დაწყება ახლა",
+                cta_title_1: "მზად ხართ",
+                cta_title_2: "სტაბილური შემოსავლისთვის",
+                cta_desc: "შეუერთდით ათასობით პარტნიორს, რომლებიც უკვე გამოიმუშავებენ CIS-MelBet-თან ერთად მთელს მსოფლიოში.",
+                cta_btn1: "Telegram-ზე გადასვლა",
+                cta_btn2: "მხარდაჭერასთან დაკავშირება",
+                footer_desc: "აზარტული თამაშები რისკის შემცველია. ინფორმაცია მოცემულია მხოლოდ საგანმანათლებლო მიზნებისთვის.",
+                footer_nav: "ნავიგაცია",
+                about: "პლატფორმის შესახებ",
+                footer_contacts: "კონტაქტები",
+                footer_social: "სოციალური ქსელები",
+                footer_rights: "ყველა უფლება დაცულია.",
+                privacy: "კონფიდენციალურობის პოლიტიკა",
+                partner_program: "პარტნიორული პროგრამა",
+                
+                // Calculator
+                calc_title: "შეაფასეთ თქვენი შემოსავალი",
+                calc_subtitle: "გამოთვლა ემყარება ყოველდღიურ ტრანზაქციების მოცულობას 5% კომისიონით დეპოზიტზე + 2% მოთამაშის გამოთხოვაზე",
+                calc_volume_label: "დღიური მოცულობა ($)",
+                calc_days_label: "ოპერაციული დღეები",
+                calc_result_label: "თქვენი სავარაუდო კომისიონი",
+                calc_result_currency: "USD თვეში",
+                terms: "გამოყენების პირობები"
+            },
+            be: {
+                home: "Галоўная",
+                contacts: "Кантакты",
+                start: "Пачаць",
+                badge: "Партнёрская праграма 2026",
+                hero_title_1: "Хочаце атрымліваць",
+                hero_title_2: "прыбытак ад стаўках?",
+                hero_subtitle: "Дзейнічайце прама зараз! Партнёрства з празрыстым даходам і ўзаемнай зацікаўленасцю ў выніку.",
+                cta_primary: "Перайсці ў Telegram",
+                cta_secondary: "Даведацца ўмовы",
+                stat_partners: "Актыўных партнёраў па ўсім свеце",
+                stat_geo: "ГЕА па ўсім свеце",
+                features_title_1: "Чаму выбіраюць",
+                features_subtitle: "Далучайцеся да базы партнёраў, якія ўжо пачалі зарабляць грошы",
+                feat1_title: "Атрымайце прыбытак",
+                feat1_desc: "Вашы намаганні ператвараюцца ў рэальныя грошы без затрымак. Чым больш ваша аўдыторыя робіць стаўкі — тым вышэй ваш даход.",
+                feat2_title: "Асабісты кабінет",
+                feat2_desc: "Адсочвайце ўсе вынікі ў рэальным часе праз асабісты кабінет.",
+                feat3_title: "Узаемная зацікаўленасць",
+                feat3_desc: "Мы прадастаўляем платформу і маркетынгавую падтрымку, вы прыцягваеце аўдыторыю.",
+                feat4_title: "Выразная стратэгія",
+                feat4_desc: "Правераная методыка з выразнымі правіламі ўваходу і выхаду. Мінімізуйце рызыкі, максімізуйце даход.",
+                feat5_title: "Гнуткасць у працы",
+                feat5_desc: "У найкарацейшыя тэрміны сумесна ўзгадняем акцыі і промакоды, каб максімізаваць даход.",
+                feat6_title: "Досвед не патрабуецца",
+                feat6_desc: "Ідэальна падыходзіць для пачаткоўцаў. Пакрокавыя інструкцыі робяць працэс зразумелым з першага дня.",
+                revenue_badge: "Падвойны даход",
+                revenue_title_1: "Два крыніцы",
+                revenue_title_2: "прыбытку",
+                revenue_subtitle: "Наш партнёр атрымлівае даход не толькі ад стаўкаў гульцоў, але і ад кожнага іх дэпазіту і вываду сродкаў",
+                rev1_label: "Крыніца 1",
+                rev1_title: "Працэнт ад стаўкаў",
+                rev1_desc: "Атрымлівайце стабільны працэнт ад кожнай стаўкі, зробленай прыцягнутымі вамі гульцамі. Чым актыўней аўдыторыя — тым вышэй ваш пасіўны даход.",
+                rev1_highlight: "Рэальны даход",
+                rev1_highlight_desc: "З кожнай стаўкі вашых гульцоў",
+                rev2_label: "Крыніца 2",
+                rev2_title: "Дэпазіты і вывад",
+                rev2_desc: "Зарабляйце на кожным папаўненні рахунку і вывадзе сродкаў гульцамі. Дадатковы паток даходу, які працуе паралельна з асноўным.",
+                rev2_highlight: "Ваш капітал",
+                rev2_highlight_desc: "За кожную транзакцыю гульца",
+                rev_combine_1: "Стаўкі",
+                rev_combine_2: "Транзакцыі",
+                rev_result_title: "Аб'ядноўваем — атрымліваем максімум",
+                rev_result_desc: "Калі абодва крыніцы даходу працуюць разам, ваш заробак расце ў геаметрычнай прагрэсіі. Гэта не проста выгадна — гэта рэвалюцыйны падыход да партнёрства.",
+                rev_stat_1: "Крыніцы даходу",
+                rev_stat_2: "Патэнцыял росту",
+                rev_stat_3: "Рызыка страт",
+                rev_cta: "Пачаць зарабляць падвойны даход",
+                rev_footer_note: "Усе выплаты празрыстыя і адсочваюцца ў рэальным часе праз асабісты кабінет",
+                steps_title_1: "Як",
+                steps_title_2: "пачаць",
+                steps_subtitle: "Тры простыя крокі да пачатку супрацоўніцтва",
+                step1_title: "Звярніцеся да нас",
+                step1_desc: "Напішыце нам у Telegram-канал. Мы адкажам на ўсе вашы пытанні і раскажам аб магчымасцях партнёрства.",
+                step2_title: "Падпішыцеся",
+                step2_desc: "Падпішыцеся на наш Telegram-канал, каб атрымліваць актуальную інфармацыю, сігналы і навіны партнёрскай праграмы.",
+                step3_title: "Пачніце супрацоўніцтва",
+                step3_desc: "Звярніцеся да нас і пачніце супрацоўніцтва. Мы дапаможам вам на кожным этапе і забяспечым камфортныя ўмовы для вашага заробку.",
+                steps_cta: "Пачаць зараз",
+                cta_title_1: "Гатовыя да",
+                cta_title_2: "стабільнага даходу",
+                cta_desc: "Далучайцеся да тысяч партнёраў, якія ўжо зарабляюць разам з CIS-MelBet па ўсім свеце.",
+                cta_btn1: "Перайсці ў Telegram",
+                cta_btn2: "Напісаць у падтрымку",
+                footer_desc: "Азартныя гульні звязаны з рызыкай. Інфармацыя прадстаўлена выключна ў адукацыйных мэтах.",
+                footer_nav: "Навігацыя",
+                about: "Аб платформе",
+                footer_contacts: "Кантакты",
+                footer_social: "Мы ў сацсетках",
+                footer_rights: "Усе правы абаронены.",
+                privacy: "Палітыка канфідэнцыяльнасці",
+                partner_program: "Партнёрская праграма",
+                
+                // Calculator
+                calc_title: "Ацаніце свой даход",
+                calc_subtitle: "Разлік праводзіцца зыходзячы з штодзённага аб'ёму транзакцый з камісіяй 5% з дэпазіту + 2% з вываду гульцоў",
+                calc_volume_label: "Сутачны аб'ём ($)",
+                calc_days_label: "Аперацыйныя дні",
+                calc_result_label: "Ваша меркаваная камісія",
+                calc_result_currency: "USD у месяц",
+                terms: "Умовы выкарыстання"
+            },
+            mn: {
+                home: "Нүүр",
+                contacts: "Холбоо барих",
+                start: "Эхлэх",
+                badge: "Түншлэлийн хөтөлбөр 2026",
+                hero_title_1: "Мөрийгөөс",
+                hero_title_2: "орлого олохыг хүсэж байна уу?",
+                hero_subtitle: "Одоо үйлдэл хий! Ил тод орлоготой, харилцан ашиг сонирхолтой түншлэл.",
+                cta_primary: "Telegram руу очих",
+                cta_secondary: "Нөхцөлийг мэдэх",
+                stat_partners: "Дэлхий даяар идэвхтэй түншүүд",
+                stat_geo: "Дэлхий даяар ГЕО",
+                features_title_1: "Яагаад",
+                features_subtitle: "Мөнгө олохоо эхэлсэн түншүүдэд нэгдээрэй",
+                feat1_title: "Ашиг олох",
+                feat1_desc: "Таны хүчин чармайлт хойшлуулалтгүй бодит мөнгө болж хувирна. Таны үзэгчид хичнээн их мөрий тавивал — таны орлого төдий чинээ өндөр.",
+                feat2_title: "Хувийн кабинет",
+                feat2_desc: "Бүх үр дүнг хувийн кабинетаар дамжуулан бодит цаг хугацаанд хянах.",
+                feat3_title: "Харилцан сонирхол",
+                feat3_desc: "Бид платформ, маркетингийн дэмжлэг үзүүлнэ, та үзэгчдээ татна.",
+                feat4_title: "Тодорхой стратеги",
+                feat4_desc: "Тодорхой орох, гарах дүрэмтэй баталгаажсан арга зүй. Эрсдлийг багасга, орлогыг өсгө.",
+                feat5_title: "Уян хатан ажиллагаа",
+                feat5_desc: "Хамгийн богино хугацаанд урамшуулал, промо кодыг хамтран тохирч, орлогыг дээд хэмжээнд хүргэнэ.",
+                feat6_title: "Туршлага шаардлагагүй",
+                feat6_desc: "Анхлан суралцагчдад төгс тохирно. Алхам алхмаар заавар нь эхний өдрөөс ойлгомжтой болгоно.",
+                revenue_badge: "Хос орлого",
+                revenue_title_1: "Хоёр ашгийн",
+                revenue_title_2: "эх үүсвэр",
+                revenue_subtitle: "Манай түнш зөвхөн тоглогчдын мөрийгөөс биш, тэдгээрийн хадгаламж болон мөнгө татах бүртээс орлого олдог",
+                rev1_label: "Эх үүсвэр 1",
+                rev1_title: "Мөрийн хувь",
+                rev1_desc: "Таны татсан тоглогчдын тавьсан мөрий бүрээс тогтвортой хувь аваарай. Үзэгчид хичнээн идэвхтэй байна — таны пассив орлого төдий чинээ өндөр.",
+                rev1_highlight: "Бодит орлого",
+                rev1_highlight_desc: "Таны тоглогчдын мөрий бүрээс",
+                rev2_label: "Эх үүсвэр 2",
+                rev2_title: "Хадгаламж ба таталт",
+                rev2_desc: "Тоглогчдын данс цэнэглэлт болон мөнгө татах бүрт орлого олоорой. Үндсэнтэйгээ зэрэгцэн ажиллах нэмэлт орлогын урсгал.",
+                rev2_highlight: "Таны хөрөнгө",
+                rev2_highlight_desc: "Тоглогчийн гүйлгээ бүрээс",
+                rev_combine_1: "Мөрий",
+                rev_combine_2: "Гүйлгээ",
+                rev_result_title: "Нэгтгэе — дээд хэмжээнд хүрье",
+                rev_result_desc: "Хоёр орлогын эх үүсвэр хамтран ажиллахад таны орлого геометр прогрессоор өснө. Энэ зөвхөн ашигтай биш — түншлэлд хувьсгалтай хандлага юм.",
+                rev_stat_1: "Орлогын эх үүсвэр",
+                rev_stat_2: "Өсөх потенциал",
+                rev_stat_3: "Алдагдах эрсдэл",
+                rev_cta: "Хос орлого олохыг эхлэх",
+                rev_footer_note: "Бүх төлбөр ил тод бөгөөд хувийн кабинетаар дамжуулан бодит цаг хугацаанд хяналт тавигдана",
+                steps_title_1: "Хэрхэн",
+                steps_title_2: "эхлэх",
+                steps_subtitle: "Хамтын ажиллагааг эхлүүлэх гурван энгийн алхам",
+                step1_title: "Бидэнтэй холбогдоорой",
+                step1_desc: "Telegram-аар бидэнд бичээрэй. Бид таны бүх асуултад хариулж, түншлэлийн боломжийн талаар мэдээлэл өгнө.",
+                step2_title: "Дагах",
+                step2_desc: "Мэдээ, дохио, түншлэлийн хөтөлбөрийн мэдээлэл авахын тулд манай Telegram сувагт дагана уу.",
+                step3_title: "Хамтын ажиллагааг эхлүүлэх",
+                step3_desc: "Бидэнтэй холбогдоод хамтын ажиллагаагаа эхлүүлээрэй. Бид танд бүх шатанд тусалж, таны орлогод таатай нөхцөл бүрдүүлнэ.",
+                steps_cta: "Одоо эхлэх",
+                cta_title_1: "Тогтвортой орлогод",
+                cta_title_2: "бэлэн үү",
+                cta_desc: "Дэлхий даяар CIS-MelBet-тэй хамтран мөнгө олож буй мянга мянган түншүүдэд нэгдээрэй.",
+                cta_btn1: "Telegram руу очих",
+                cta_btn2: "Дэмжлэгт бичих",
+                footer_desc: "Мөрийн тоглоом эрсдэлтэй. Мэдээлэл зөвхөн боловсролын зорилгоор өгөгдсөн.",
+                footer_nav: "Навигаци",
+                about: "Платформын тухай",
+                footer_contacts: "Холбоо барих",
+                footer_social: "Нийгмийн сүлжээ",
+                footer_rights: "Бүх эрх хамгаалагдсан.",
+                privacy: "Нууцлалын бодлого",
+                partner_program: "Түншлэлийн хөтөлбөр",
+                
+                // Calculator
+                calc_title: "Орлогоо үнэлээрэй",
+                calc_subtitle: "Тооцоо нь өдөр тутмын гүйлгээний хэмжээнд 5% хураамж + тоглогчийн мөнгө таталтаас 2%-ийн үндсэн дээр хийгддэг",
+                calc_volume_label: "Өдрийн хэмжээ ($)",
+                calc_days_label: "Ажлын өдрүүд",
+                calc_result_label: "Таны урьдчилсан хураамж",
+                calc_result_currency: "Сард USD",
+                terms: "Ашиглалтын нөхцөл"
+            },
+            az: {
+                home: "Əsas səhifə",
+                contacts: "Əlaqə",
+                start: "Başla",
+                badge: "Tərəfdaşlıq proqramı 2026",
+                hero_title_1: "Mərcdən",
+                hero_title_2: "gəlir əldə etmək istəyirsiniz?",
+                hero_subtitle: "İndi hərəkət edin! Şəffaf gəlir və qarşılıqlı maraq ilə tərəfdaşlıq.",
+                cta_primary: "Telegram-a keç",
+                cta_secondary: "Şərtləri öyrən",
+                stat_partners: "Bütün dünyada fəal tərəfdaşlar",
+                stat_geo: "Bütün dünyada GEO",
+                features_title_1: "Niyə",
+                features_subtitle: "Artıq pul qazanmağa başlayan tərəfdaşlara qoşulun",
+                feat1_title: "Gəlir əldə et",
+                feat1_desc: "Sizin səyləriniz gecikməsiz real pula çevrilir. Auditoriyanız nə qədər çox mərc etsə — gəliriniz bir o qədər yüksək olar.",
+                feat2_title: "Şəxsi kabinet",
+                feat2_desc: "Bütün nəticələri real vaxtda şəxsi kabinet vasitəsilə izləyin.",
+                feat3_title: "Qarşılıqlı maraq",
+                feat3_desc: "Biz platforma və marketinq dəstəyi təqdim edirik, siz auditoriya cəlb edirsiniz.",
+                feat4_title: "Aydın strategiya",
+                feat4_desc: "Aydın giriş və çıxış qaydaları ilə yoxlanılmış metodologiya. Riskləri minimallaşdırın, gəliri maksimallaşdırın.",
+                feat5_title: "İşdə çeviklik",
+                feat5_desc: "Gəliri maksimum səviyyəyə çatdırmaq üçün ən qısa müddətdə birgə aksiyalar və promokodlar razılaşdırırıq.",
+                feat6_title: "Təcrübə tələb olunmur",
+                feat6_desc: "Yeni başlayanlar üçün ideal. Addım-addım təlimatlar prosesi ilk gündən başa düşülən edir.",
+                revenue_badge: "İkiqat gəlir",
+                revenue_title_1: "İki gəlir",
+                revenue_title_2: "mənbəyi",
+                revenue_subtitle: "Tərəfdaşımız yalnız oyunçuların mərclərindən deyil, həm də onların hər bir depozitindən və vəsait çıxarılışından gəlir əldə edir",
+                rev1_label: "Mənbə 1",
+                rev1_title: "Mərclərdən faiz",
+                rev1_desc: "Sizin cəlb etdiyiniz oyunçuların etdiyi hər bir mərclərdən sabit faiz əldə edin. Auditoriya nə qədər fəal olsa — sizin passiv gəliriniz bir o qədər yüksək olar.",
+                rev1_highlight: "Real gəlir",
+                rev1_highlight_desc: "Oyunçularınızın bütün mərclərindən",
+                rev2_label: "Mənbə 2",
+                rev2_title: "Depozitlər və çıxarış",
+                rev2_desc: "Oyunçuların hər bir hesab artırması və vəsait çıxarılışından qazanın. Əsas ilə paralel işləyən əlavə gəlir axını.",
+                rev2_highlight: "Sizin kapitalınız",
+                rev2_highlight_desc: "Hər bir əməliyyat üçün",
+                rev_combine_1: "Mərclər",
+                rev_combine_2: "Əməliyyatlar",
+                rev_result_title: "Birləşdiririk — maksimum alırıq",
+                rev_result_desc: "Hər iki gəlir mənbəyi birlikdə işlədikdə, sizin qazancınız həndəsi proqressiya ilə artır. Bu yalnız sərfəli deyil — bu tərəfdaşlığa inqilabi yanaşmadır.",
+                rev_stat_1: "Gəlir mənbəyi",
+                rev_stat_2: "Böyümə potensialı",
+                rev_stat_3: "İtirmə riski",
+                rev_cta: "İkiqat gəlir qazanmağa başla",
+                rev_footer_note: "Bütün ödənişlər şəffafdır və şəxsi kabinet vasitəsilə real vaxtda izlənilir",
+                steps_title_1: "Necə",
+                steps_title_2: "başlamaq",
+                steps_subtitle: "Əməkdaşlığa başlamaq üçün üç sadə addım",
+                step1_title: "Bizimlə əlaqə saxlayın",
+                step1_desc: "Telegram-da bizə yazın. Bütün suallarınıza cavab verəcəyik və tərəfdaşlıq imkanları haqqında məlumat verəcəyik.",
+                step2_title: "Abunə olun",
+                step2_desc: "Aktual məlumat, siqnallar və tərəfdaşlıq proqramı xəbərləri almaq üçün Telegram kanalımıza abunə olun.",
+                step3_title: "Əməkdaşlığa başlayın",
+                step3_desc: "Bizimlə əlaqə saxlayın və əməkdaşlığa başlayın. Sizə hər mərhələdə kömək edəcəyik və qazancınız üçün rahat şərait yaradacağıq.",
+                steps_cta: "İndi başla",
+                cta_title_1: "Sabit gəlirə",
+                cta_title_2: "hazırsınız",
+                cta_desc: "Bütün dünyada CIS-MelBet ilə birlikdə pul qazanan minlərlə tərəfdaşa qoşulun.",
+                cta_btn1: "Telegram-a keç",
+                cta_btn2: "Dəstəyə yaz",
+                footer_desc: "Qumar oyunları risklidir. Məlumat yalnız təhsil məqsədləri üçün təqdim edilir.",
+                footer_nav: "Naviqasiya",
+                about: "Platforma haqqında",
+                footer_contacts: "Əlaqə",
+                footer_social: "Sosial şəbəkələr",
+                footer_rights: "Bütün hüquqlar qorunur.",
+                privacy: "Məxfilik siyasəti",
+                partner_program: "Tərəfdaşlıq proqramı",
+                
+                // Calculator
+                calc_title: "Gəlirinizi qiymətləndirin",
+                calc_subtitle: "Hesablama gündəlik əməliyyat həcminə əsaslanır, depozitə 5% + oyunçunun çıxarılmasına 2% komissiya",
+                calc_volume_label: "Gündəlik həcm ($)",
+                calc_days_label: "Əməliyyat günləri",
+                calc_result_label: "Sizin təxmini komissiyanız",
+                calc_result_currency: "Ayda USD",
+                terms: "İstifadə şərtləri"
+            },
+            tj: {
+                home: "Асосӣ",
+                contacts: "Тамос",
+                start: "Оғоз кардан",
+                badge: "Барномаи шарикӣ 2026",
+                hero_title_1: "Мехоҳед",
+                hero_title_2: "даромад гиред?",
+                hero_subtitle: "Акнун амал кунед! Шарикӣ бо даромади шаффоф ва таваҷҷуҳи мутақобила ба натиҷа.",
+                cta_primary: "Ба Telegram гузаред",
+                cta_secondary: "Шартҳоро донистан",
+                stat_partners: "Шарикони фаъол дар саросари ҷаҳон",
+                stat_geo: "ГЕО дар саросари ҷаҳон",
+                features_title_1: "Чаро",
+                features_subtitle: "Ба шариконе, ки аллакай пул кор карданро оғоз кардаанд, ҳамроҳ шавед",
+                feat1_title: "Даромад гиред",
+                feat1_desc: "Кӯшишҳои шумо бе деркунӣ ба пули воқеӣ табдил меёбанд. Ҳар қадар аудиторияи шумо зиёдтар бозӣ кунад — даромади шумо ҳамон қадар баландтар аст.",
+                feat2_title: "Кабинети шахсӣ",
+                feat2_desc: "Ҳамаи натиҷаҳоро дар вақти воқеӣ тавассути кабинети шахсӣ пайгирӣ кунед.",
+                feat3_title: "Таваҷҷуҳи мутақобила",
+                feat3_desc: "Мо платформа ва дастгирии маркетингиро таъмин менамоем, шумо аудиторияро ҷалб мекунед.",
+                feat4_title: "Стратегияи равшан",
+                feat4_desc: "Методологияи санҷидашуда бо қоидаҳои равшани даромаду берунравӣ. Хатараро кам кунед, даромадро зиёд кунед.",
+                feat5_title: "Мосипазирии кор",
+                feat5_desc: "Мо дар кӯтоҳтарин муддат якҷоя акцияҳо ва промокодҳоро мувофиқ мекунем, то даромадро ба ҳадди аксар расонем.",
+                feat6_title: "Таҷриба лозим нест",
+                feat6_desc: "Барои оғозкунандаҳо комил аст. Дастурҳои қадам ба қадам равандро аз рӯзи аввал фаҳмо мекунанд.",
+                revenue_badge: "Дукарата даромад",
+                revenue_title_1: "Ду манбаи",
+                revenue_title_2: "даромад",
+                revenue_subtitle: "Шарики мо на танҳо аз бозиҳои бозигарон, балки аз ҳар як амонат ва баромади онҳо низ даромад мегирад",
+                rev1_label: "Манбаъ 1",
+                rev1_title: "Фоиз аз бозиҳо",
+                rev1_desc: "Аз ҳар як бозие, ки бозигарони ҷалбкардаи шумо мекунанд, фоизи устокор гиред. Ҳар қадар аудитория фаъол бошад — даромади пасиви шумо ҳамон қадар баланд аст.",
+                rev1_highlight: "Даромади воқеӣ",
+                rev1_highlight_desc: "Аз ҳамаи бозиҳои бозигарони шумо",
+                rev2_label: "Манбаъ 2",
+                rev2_title: "Амонатҳо ва баромад",
+                rev2_desc: "Аз ҳар як пуркунии ҳисоб ва баромади бозигарон даромад гиред. Ҷараёни иловагии даромад, ки ҳамзамон бо асосӣ кор мекунад.",
+                rev2_highlight: "Сармояи шумо",
+                rev2_highlight_desc: "Барои ҳар як амалиёти бозигар",
+                rev_combine_1: "Бозиҳо",
+                rev_combine_2: "Амалиётҳо",
+                rev_result_title: "Муттаҳид мекунем — максимум мегирем",
+                rev_result_desc: "Вақте ки ҳар ду манбаи даромад якҷоя кор мекунанд, даромади шумо бо прогрессияи геометрӣ афзоиш меёбад. Ин на танҳо фоидаовар аст — ин услуби инқилобии шарикӣ мебошад.",
+                rev_stat_1: "Манбаи даромад",
+                rev_stat_2: "Потенсиали рушд",
+                rev_stat_3: "Хатари талафот",
+                rev_cta: "Оғози даромади дукарата",
+                rev_footer_note: "Ҳамаи пардохтҳо шаффофанд ва тавассути кабинети шахсӣ дар вақти воқеӣ пайгирӣ мешаванд",
+                steps_title_1: "Чӣ тавр",
+                steps_title_2: "оғоз кардан",
+                steps_subtitle: "Се қадами оддӣ барои оғози ҳамкорӣ",
+                step1_title: "Ба мо муроҷиат кунед",
+                step1_desc: "Дар Telegram ба мо нависед. Мо ба ҳамаи саволҳои шумо ҷавоб медиҳем ва дар бораи имкониятҳои шарикӣ нақл мекунем.",
+                step2_title: "Обуна шавед",
+                step2_desc: "Барои гирифтани маълумоти актуалӣ, сигналҳо ва хабарҳои барномаи шарикӣ ба канали Telegram-и мо обуна шавед.",
+                step3_title: "Ҳамкориро оғоз кунед",
+                step3_desc: "Ба мо муроҷиат кунед ва ҳамкориро оғоз кунед. Мо ба шумо дар ҳар қадам кумак мекунем ва шароити муносиб барои даромади шумо фароҳам меорем.",
+                steps_cta: "Акнун оғоз кунед",
+                cta_title_1: "Омодаед ба",
+                cta_title_2: "даромади устокор",
+                cta_desc: "Ба ҳазорҳо шариконе, ки аллакай дар саросари ҷаҳон бо CIS-MelBet пул кор мекунанд, ҳамроҳ шавед.",
+                cta_btn1: "Ба Telegram гузаред",
+                cta_btn2: "Ба дастгирӣ нависед",
+                footer_desc: "Бозиҳои қимор хатарноканд. Маълумот танҳо ба мақсадҳои таълимӣ пешниҳод карда мешавад.",
+                footer_nav: "Навигатсия",
+                about: "Дар бораи платформа",
+                footer_contacts: "Тамос",
+                footer_social: "Шабакаҳои иҷтимоӣ",
+                footer_rights: "Ҳамаи ҳуқуқҳо ҳифз шудаанд.",
+                privacy: "Сиёсати махфият",
+                partner_program: "Барномаи шарикӣ",
+                
+                // Calculator
+                calc_title: "Даромади худро арзёбӣ кунед",
+                calc_subtitle: "Ҳисобкунӣ дар асоси ҳаҷми транзакцияҳои ҳаррӯза бо комиссияи 5% аз депозит + 2% аз баромади бозигарон гузаронида мешавад",
+                calc_volume_label: "Ҳаҷми шабонарӯзӣ ($)",
+                calc_days_label: "Рӯзҳои оператсионӣ",
+                calc_result_label: "Комиссияи пешбинишудаи шумо",
+                calc_result_currency: "USD дар моҳ",
+                terms: "Шартҳои истифода"
+            },
+            ro: {
+                home: "Acasă",
+                contacts: "Contacte",
+                start: "Începe",
+                badge: "Program de parteneriat 2026",
+                hero_title_1: "Vrei să câștigi",
+                hero_title_2: "profit din pariuri?",
+                hero_subtitle: "Acționează acum! Parteneriat cu venituri transparente și interes mutual pentru rezultate.",
+                cta_primary: "Mergi pe Telegram",
+                cta_secondary: "Află condițiile",
+                stat_partners: "Parteneri activi în întreaga lume",
+                stat_geo: "GEO în întreaga lume",
+                features_title_1: "De ce să alegi",
+                features_subtitle: "Alătură-te partenerilor care au început deja să câștige bani",
+                feat1_title: "Obține profit",
+                feat1_desc: "Eforturile tale se transformă în bani reali fără întârzieri. Cu mai multe pariuri plasează audiența ta — cu atât mai mare este venitul tău.",
+                feat2_title: "Cabinet personal",
+                feat2_desc: "Urmărește toate rezultatele în timp real prin cabinetul personal.",
+                feat3_title: "Interes mutual",
+                feat3_desc: "Noi oferim platforma și suportul de marketing, tu atragi audiența.",
+                feat4_title: "Strategie clară",
+                feat4_desc: "Metodologie verificată cu reguli clare de intrare și ieșire. Minimizează riscurile, maximizează venitul.",
+                feat5_title: "Flexibilitate la lucru",
+                feat5_desc: "În cel mai scurt timp convenim împreună promoții și coduri promoționale pentru a maximiza venitul.",
+                feat6_title: "Experiența nu este necesară",
+                feat6_desc: "Perfect pentru începători. Instrucțiunile pas cu pas fac procesul clar încă din prima zi.",
+                revenue_badge: "Venit dublu",
+                revenue_title_1: "Două surse de",
+                revenue_title_2: "profit",
+                revenue_subtitle: "Partenerul nostru câștigă nu doar din pariurile jucătorilor, ci și din fiecare depozit și retragere a acestora",
+                rev1_label: "Sursa 1",
+                rev1_title: "Procent din pariuri",
+                rev1_desc: "Primește un procent stabil din fiecare pariu plasat de jucătorii aduși de tine. Cu cât audiența este mai activă — cu atât mai mare este venitul tău pasiv.",
+                rev1_highlight: "Venit real",
+                rev1_highlight_desc: "Din toate pariurile jucătorilor tăi",
+                rev2_label: "Sursa 2",
+                rev2_title: "Depozite și retrageri",
+                rev2_desc: "Câștigă la fiecare alimentare a contului și retragere de fonduri de către jucători. Un flux suplimentar de venit care funcționează paralel cu cel principal.",
+                rev2_highlight: "Capitalul tău",
+                rev2_highlight_desc: "Pentru fiecare tranzacție a jucătorului",
+                rev_combine_1: "Pariuri",
+                rev_combine_2: "Tranzacții",
+                rev_result_title: "Combinăm — obținem maximul",
+                rev_result_desc: "Când ambele surse de venit funcționează împreună, câștigul tău crește în progresie geometrică. Nu este doar profitabil — este o abordare revoluționară a parteneriatului.",
+                rev_stat_1: "Sursă de venit",
+                rev_stat_2: "Potențial de creștere",
+                rev_stat_3: "Risc de pierderi",
+                rev_cta: "Începe să câștigi venit dublu",
+                rev_footer_note: "Toate plățile sunt transparente și urmărite în timp real prin cabinetul personal",
+                steps_title_1: "Cum să",
+                steps_title_2: "începi",
+                steps_subtitle: "Trei pași simpli pentru a începe colaborarea",
+                step1_title: "Contactează-ne",
+                step1_desc: "Scrie-ne pe Telegram. Îți vom răspunde la toate întrebările și îți vom povesti despre oportunitățile de parteneriat.",
+                step2_title: "Abonează-te",
+                step2_desc: "Abonează-te la canalul nostru de Telegram pentru a primi informații actualizate, semnale și știri despre programul de parteneriat.",
+                step3_title: "Începe colaborarea",
+                step3_desc: "Contactează-ne și începe colaborarea. Te vom ajuta la fiecare etapă și vom asigura condiții confortabile pentru câștigul tău.",
+                steps_cta: "Începe acum",
+                cta_title_1: "Ești gata pentru",
+                cta_title_2: "venit stabil",
+                cta_desc: "Alătură-te miilor de parteneri care câștigă deja împreună cu CIS-MelBet în întreaga lume.",
+                cta_btn1: "Mergi pe Telegram",
+                cta_btn2: "Scrie suportului",
+                footer_desc: "Jocurile de noroc implică riscuri. Informația este furnizată exclusiv în scop educațional.",
+                footer_nav: "Navigare",
+                about: "Despre platformă",
+                footer_contacts: "Contacte",
+                footer_social: "Rețele sociale",
+                footer_rights: "Toate drepturile rezervate.",
+                privacy: "Politica de confidențialitate",
+                partner_program: "Program de parteneriat",
+                
+                // Calculator
+                calc_title: "Estimează-ți venitul",
+                calc_subtitle: "Calculul se efectuează pe baza volumului zilnic de tranzacții cu un comision de 5% la depozit + 2% la retragerea jucătorilor",
+                calc_volume_label: "Volum zilnic ($)",
+                calc_days_label: "Zile operaționale",
+                calc_result_label: "Comisia dvs. estimată",
+                calc_result_currency: "USD pe lună",
+                terms: "Termeni de utilizare"
+            }
+        };
+
+        function setLang(lang) {
+            // Update active button state
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('text-gray-400');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                    btn.classList.remove('text-gray-400');
+                }
+            });
+
+            // Update all translatable elements
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+
+            // Store preference - with error handling for iOS Safari
+            try {
+                localStorage.setItem('cis-bet-lang', lang);
+            } catch (e) {
+                // iOS private mode or storage disabled - ignore
+            }
+        }
+
+        // iOS-compatible event handling for language buttons
+        function initLangButtons() {
+            var buttons = document.querySelectorAll('.lang-btn');
+
+            buttons.forEach(function(btn) {
+                // Direct click handler - simplest approach
+                btn.addEventListener('click', function(e) {
+                    var lang = this.getAttribute('data-lang');
+                    if (lang && translations[lang]) {
+                        setLang(lang);
+                    }
+                });
+
+                // iOS fast-tap: prevent default touch behavior and trigger click manually
+                btn.addEventListener('touchstart', function(e) {
+                    this._touchMoved = false;
+                }, { passive: true });
+
+                btn.addEventListener('touchmove', function(e) {
+                    this._touchMoved = true;
+                }, { passive: true });
+
+                btn.addEventListener('touchend', function(e) {
+                    if (!this._touchMoved) {
+                        e.preventDefault();
+                        var lang = this.getAttribute('data-lang');
+                        if (lang && translations[lang]) {
+                            setLang(lang);
+                        }
+                    }
+                }, { passive: false });
+            });
+        }
+
+        // Load saved language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initLangButtons();
+
+            var savedLang = null;
+            try {
+                savedLang = localStorage.getItem('cis-bet-lang');
+            } catch (e) {
+                // iOS private mode - ignore
+            }
+            if (savedLang && translations[savedLang]) {
+                setLang(savedLang);
+            }
+        });
+    
+
+        // Income Calculator
+        (function() {
+            var volumeSlider = document.getElementById('volume-slider');
+            var daysSlider = document.getElementById('days-slider');
+            var volumeValue = document.getElementById('volume-value');
+            var daysValue = document.getElementById('days-value');
+            var resultAmount = document.getElementById('result-amount');
+
+            function formatMoney(amount) {
+                return '$' + amount.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            }
+
+            function updateSliderProgress(slider) {
+                var min = parseFloat(slider.min);
+                var max = parseFloat(slider.max);
+                var val = parseFloat(slider.value);
+                var progress = ((val - min) / (max - min)) * 100;
+                slider.style.setProperty('--progress', progress + '%');
+            }
+
+            function calculate() {
+                var volume = parseFloat(volumeSlider.value);
+                var days = parseFloat(daysSlider.value);
+                var commission = volume * days * 0.07;
+
+                volumeValue.textContent = formatMoney(volume);
+                daysValue.textContent = days + ' ' + (days === 1 ? 'день' : days < 5 ? 'дня' : 'дней');
+                resultAmount.textContent = formatMoney(commission);
+
+                updateSliderProgress(volumeSlider);
+                updateSliderProgress(daysSlider);
+            }
+
+            if (volumeSlider && daysSlider) {
+                volumeSlider.addEventListener('input', calculate);
+                daysSlider.addEventListener('input', calculate);
+                calculate();
+            }
+        })();
+
+</script>
+
+    <!-- Messenger Widgets -->
+    <div id="messenger-widgets" class="fixed bottom-6 right-4 z-50 flex flex-col gap-3 pointer-events-auto" style="-webkit-transform: translateZ(0);">
+        <a href="#" class="messenger-btn w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200" style="background-color: #0088cc;" title="Telegram" data-messenger="telegram">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.015-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.062 3.345-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.442-.751-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.015 3.333-1.386 4.025-1.627 4.477-1.635.099-.002.321.023.465.141.121.099.154.232.17.325.015.093.034.305.019.471z"/>
+            </svg>
+        </a>
+        <a href="#" class="messenger-btn w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200" style="background-color: #25D366;" title="WhatsApp" data-messenger="whatsapp">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.13 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+        </a>
+        <a href="#" class="messenger-btn w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200" style="background-color: #0077FF;" title="VKontakte" data-messenger="vk">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.864-.525-2.05-1.714-1.033-1.033-1.49-1.171-1.744-1.171-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4 8.673 4 8.231c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.677.847 2.456 2.274 4.607 2.862 4.607.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.813-.542 1.254-1.406 2.15-3.574 2.15-3.574.119-.254.322-.491.763-.491h1.744c.525 0 .644.27.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/>
+            </svg>
+        </a>
+    </div>
+
+</body>
+</html>
